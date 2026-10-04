@@ -1,7 +1,7 @@
 ---
-title: "Build Editor AI from Source with the Geode SDK"
+title: "Build Editor AI from Source — Geode SDK Setup Guide"
 sidebarTitle: "Building"
-description: "Set up the Geode SDK toolchain, clone the Editor AI repository, and compile a .geode mod file for Windows, macOS, Android, or iOS."
+description: "Configure the Geode SDK toolchain, clone the Editor AI repository, and compile a .geode mod file for Windows, macOS, Android, or iOS."
 ---
 
 Editor AI is built with the Geode SDK build system. Compiling from source requires Geode's CMake toolchain and a platform-appropriate C++ compiler. The project uses C++23 and is structured as a standard Geode mod with a shared library output — the Geode SDK handles packaging the final `.geode` file automatically.
@@ -16,7 +16,7 @@ Editor AI is built with the Geode SDK build system. Compiling from source requir
     The minimum CMake version required by the project's `CMakeLists.txt`. Must be on your `PATH`.
   </Card>
   <Card title="C++ Compiler" icon="code" href="https://docs.geode-sdk.org">
-    **Windows** — MSVC 2022. **macOS / iOS** — Clang 14+. **Android** — NDK r27.
+    **Windows** — MSVC 2022. **macOS / iOS** — Clang (Apple toolchain). **Android** — NDK r28.
   </Card>
   <Card title="Geometry Dash" icon="gamepad" href="https://store.steampowered.com/app/322170/Geometry_Dash/">
     Required for local testing. Install the `.geode` output into your Geode mods folder and launch the game to verify.

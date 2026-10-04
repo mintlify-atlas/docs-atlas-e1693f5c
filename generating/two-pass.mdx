@@ -1,7 +1,7 @@
 ---
-title: "Two-Pass Generation for Better Level Quality"
+title: "Two-Pass Generation — Gameplay First, Decoration Second"
 sidebarTitle: "Two-Pass"
-description: "Two-pass generation builds the gameplay skeleton first, then adds decoration, color triggers, and atmosphere in a separate pass — producing higher quality results."
+description: "Two-pass generation in Editor AI builds the gameplay skeleton first, then adds decoration and color triggers without touching reviewed gameplay objects."
 ---
 
 When Two-Pass Generation is enabled (the default), Editor AI separates the work of building a level into two distinct phases. The AI focuses entirely on playability in the first pass, then dedicates the second pass to visual polish — without going back to touch what you already reviewed and accepted.
@@ -24,13 +24,15 @@ Generating gameplay and decoration simultaneously pulls the AI's attention in tw
 
 ## Enabling and disabling
 
+**Setting:** `two-pass-generation` — **Default:** on
+
 Toggle **Two-Pass Generation** in Settings → AI Behavior. The setting is on by default.
 
 When disabled, the AI attempts to generate gameplay and decoration together in a single pass. This is faster but typically produces lower-quality results.
 
 ## Triggers and Colors
 
-**Setting:** `enable-advanced-features` — **Default:** on
+**Setting:** `enable-advanced-features` — **Default:** on (labeled "Triggers & Colors" in the UI)
 
 When this setting is enabled, the AI is allowed to emit color triggers, move triggers, pulse triggers, and group IDs during pass 2. These let it create dynamic visual effects like background color shifts, pulsing objects, and synchronized flashes.
 
@@ -40,7 +42,7 @@ Disable this setting if you want pass 2 to place only static decorative objects 
 
 **Setting:** `enable-vision` — **Default:** on
 
-For AI models that support image input — Claude, Gemini, GPT-4o, LLaVA, and others — Editor AI attaches a rendered snapshot of the current level to review and follow-up turns. This lets the AI literally see what it built, not just reason about object coordinates in the abstract. The result is more accurate refinements and better spatial awareness during pass 2 decoration.
+For AI models that support image input — Claude, Gemini, GPT-4o, LLaVA, and others — Editor AI attaches a rendered snapshot of the current level to review and follow-up turns. This lets the AI see what it built, not just reason about object coordinates in the abstract. The result is more accurate refinements and better spatial awareness during pass 2 decoration.
 
 <Tip>
   If you accept the skeleton but want to redo the decoration from scratch, send a follow-up message like "Redo the decoration with a neon theme." The AI will restyle the visual layer without modifying any gameplay objects.

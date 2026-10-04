@@ -1,28 +1,29 @@
 ---
-title: "AI Provider Overview for Editor AI"
+title: "Editor AI Provider Guide: All 13 Supported Backends"
 sidebarTitle: "Overview"
-description: "Editor AI supports 13 AI providers — two free with no account, seven hosted with API keys, and four local/self-hosted options. Choose the one that fits your needs."
+description: "Editor AI supports 13 AI providers: two free with no account, eight hosted cloud APIs, and three local self-hosted options. Pick the right one for you."
 ---
 
 Editor AI is provider-agnostic. Configure any supported backend in **Settings → Providers** and switch at any time without losing your sessions. Whether you want zero-cost community inference, a frontier cloud model, or fully private local generation, there is a supported provider for every setup.
 
 ## Provider Comparison
 
-| Provider | Cost | Account Required | Setup Effort | Notes |
-|---|---|---|---|---|
-| **Platinum** | Free | No | Minimal | Community Ollama proxy; volunteer-run servers by VLT GG |
-| **Ollama** | Free | No | Low | Fully local; 6+ GB VRAM recommended |
-| **Gemini** | Free tier / pay-as-you-go | Yes (Google account) | Low | Tight free-tier rate limits |
-| **Claude** | Pay-as-you-go | Yes (Anthropic) | Low | Strong reasoning; vision supported |
-| **OpenAI** | Pay-as-you-go | Yes (OpenAI) | Low | GPT-4o default; vision supported |
-| **OpenRouter** | Free tier / pay-as-you-go | Yes (or browser sign-in) | Low | One key accesses many hosted models |
-| **Mistral** | Pay-as-you-go | Yes (Mistral) | Low | European-hosted; good value |
-| **HuggingFace** | Free tier / pay-as-you-go | Yes (or browser sign-in) | Low | Repo-style model IDs |
-| **DeepSeek** | Pay-as-you-go | Yes (DeepSeek) | Low | Cost-effective; strong code/reasoning |
-| **Groq** | Free tier / pay-as-you-go | Yes (Groq) | Low | Very fast inference; free tier available |
-| **LM Studio** | Free | No | Medium | Local GUI app; OpenAI-compatible server |
-| **llama.cpp** | Free | No | Medium | Lightweight local server; GGUF models |
-| **Custom** | Varies | Varies | Medium | Any OpenAI-compatible endpoint (BYOPAK) |
+| Provider | Provider ID | Cost | Account Required | Setup Effort | Notes |
+|---|---|---|---|---|---|
+| **Platinum** | `ollama` (Use Platinum ON) | Free | No | Minimal | Community Ollama proxy; volunteer-run servers by VLT GG |
+| **Ollama** | `ollama` | Free | No | Low | Fully local; 6+ GB VRAM recommended |
+| **Gemini** | `gemini` | Free tier / pay-as-you-go | Yes (Google account) | Low | Tight free-tier rate limits |
+| **Claude** | `claude` | Pay-as-you-go | Yes (Anthropic) | Low | Strong reasoning; vision supported |
+| **OpenAI** | `openai` | Pay-as-you-go | Yes (OpenAI) | Low | GPT-4o default; vision supported |
+| **OpenRouter** | `openrouter` | Free tier / pay-as-you-go | Yes (or browser sign-in) | Low | One key accesses many hosted models |
+| **Mistral** | `ministral` | Pay-as-you-go | Yes (Mistral) | Low | European-hosted; good value |
+| **HuggingFace** | `huggingface` | Free tier / pay-as-you-go | Yes (or browser sign-in) | Low | Repo-style model IDs |
+| **DeepSeek** | `deepseek` | Pay-as-you-go | Yes (DeepSeek) | Low | Cost-effective; strong code/reasoning |
+| **Groq** | `groq` | Free tier / pay-as-you-go | Yes (Groq) | Low | Very fast inference; free tier available |
+| **LM Studio** | `lm-studio` | Free | No | Medium | Local GUI app; OpenAI-compatible server |
+| **llama.cpp** | `llama-cpp` | Free | No | Medium | Lightweight local server; GGUF models |
+| **Custom** | `custom` | Varies | Varies | Medium | Any OpenAI-compatible endpoint (BYOPAK) |
+| **Manual** | `manual` | Free | No | None | Copy-paste with any chatbot; no API needed |
 
 ## Provider Categories
 

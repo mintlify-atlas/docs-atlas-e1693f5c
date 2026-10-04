@@ -1,14 +1,14 @@
 ---
-title: "Live Block Placement in Editor AI"
+title: "Live Block Placement — Watch Your Level Build in Real Time"
 sidebarTitle: "Live Placement"
-description: "With Live Block Placement on, Editor AI places blocks in the Geometry Dash editor as the AI generates them — see your level take shape in real time."
+description: "Editor AI places blocks into the Geometry Dash editor as the AI generates them. Learn spawn speed, ground Y, and the Accept/Edit/Deny review flow."
 ---
 
 By default, Editor AI places each round of blocks into the editor while the AI is still working. You don't have to wait for the full generation to finish before seeing results — the level builds itself in front of you, object by object.
 
 ## How it works
 
-The AI generates objects in multiple rounds. With **Live Block Placement** enabled, each round's objects are placed onto the editor's dedicated AI layer as soon as they arrive from the API. The rest of your existing level fades back visually so the incoming AI build stands out clearly. Once the full generation is complete, the final result stays on the AI layer for your review.
+The AI generates objects in multiple rounds. With **Live Block Placement** enabled (`live-placement`, default: on), each round's objects are placed onto the editor's dedicated AI layer as soon as they arrive from the API. The rest of your existing level fades back visually so the incoming AI build stands out clearly. Once the full generation is complete, the final result stays on the AI layer for your review.
 
 ## Spawn Speed
 
@@ -24,6 +24,12 @@ The editor Y coordinate that Editor AI treats as the visible ground line. The de
 
 - **Lower the value** if blocks are floating above the ground.
 - **Higher the value** if blocks are burying into or below the ground.
+
+## Edit Workload Target
+
+**Setting:** `edit-target-ops` — **Default:** 1500 — **Range:** 0–5000
+
+When the AI reworks an existing level (rather than building fresh), it must reach at least this many total edits — objects moved, deleted, added, or restyled — before the result stages for review. The AI is asked to keep working until it gets there. Small follow-up tweaks of fewer than 30 edits stage immediately regardless of this setting. Set to 0 to disable the minimum workload requirement.
 
 ## Accept, Edit, or Deny
 

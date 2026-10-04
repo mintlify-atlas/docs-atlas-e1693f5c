@@ -1,33 +1,26 @@
 ---
 title: "Copilot Mode: Automatic Physics and Death Zone Fixes"
 sidebarTitle: "Copilot Mode"
-description: "Copilot Mode watches your level as you edit and automatically proposes a fix blueprint whenever it detects death zones or physics problems — you always approve."
+description: "Copilot Mode is off by default. When enabled, it watches your level as you edit and proposes fix blueprints for death zones — at most one every 2 minutes."
 ---
 
 Copilot Mode turns Editor AI into a passive reviewer that watches alongside you as you build. While you edit your level manually, the AI monitors for death zones and physics problems in the background. When it finds one, it automatically generates a targeted fix blueprint and stages it for your review — the same **Accept / Edit / Deny** flow as any other generation, so you always have the final say.
 
 ## How it works
 
-With Copilot Mode on, Editor AI observes the editor continuously. At most once every 2 minutes, if the AI detects a problem in your level — an unavoidable spike, a broken portal alignment, an unreachable section, or a physics inconsistency — it quietly starts a fix generation. When the fix is ready, it appears on the AI layer and stages for review, notifying you without interrupting what you're doing. You choose whether to accept, edit, or discard it.
+With Copilot Mode on, Editor AI observes the editor continuously. At most once every 2 minutes, if the AI detects a problem in your level — such as a death zone or a physics inconsistency — it quietly starts a fix generation. When the fix is ready, it appears on the AI layer and stages for review, notifying you without interrupting what you're doing. You choose whether to accept, edit, or discard it.
 
 The 2-minute cooldown ensures Copilot doesn't flood you with proposals while you're actively placing objects. It waits until the situation has settled before raising its hand.
 
 ## Enabling Copilot Mode
 
-Go to **Settings → AI Behavior** and toggle **Copilot Mode** on. The setting is off by default.
+**Setting:** `copilot-mode` — **Default:** off
+
+Go to **Settings → AI Behavior** and toggle **Copilot Mode** on. The setting is **off by default**.
 
 <Warning>
   Copilot Mode requires an active AI provider with available quota. For low-latency auto-fixes, use a fast provider such as Groq (free tier available) or a local Ollama instance — this keeps auto-fix response times short and avoids burning quota on slower hosted models.
 </Warning>
-
-## What it checks
-
-Copilot uses simulated playtesting (controlled by the **AI Playtest** setting) to evaluate the level between your edits. It looks for:
-
-- **Death zones** — spike placements, saw alignments, or tight corridors that are statistically unavoidable.
-- **Physics problems** — portal sequences that leave the player in an impossible state, jump sequences with no viable path, or gravity changes that strand the player.
-- **Portal alignment issues** — portals placed at heights or positions inconsistent with the gameplay leading into them.
-- **Layout inconsistencies** — structural gaps or disconnected segments that break the flow of the level.
 
 ## Rate limit
 

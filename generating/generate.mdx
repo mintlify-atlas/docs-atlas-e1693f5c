@@ -1,7 +1,7 @@
 ---
-title: "Generate a Geometry Dash Level with AI"
+title: "Generate a Level with Editor AI — Prompt and Settings"
 sidebarTitle: "Generate"
-description: "Step-by-step guide to starting an AI generation in Editor AI — choose a target level, write a prompt, set difficulty and style, and watch it build."
+description: "Start an AI generation in Editor AI: pick a target level, write a prompt, set difficulty, style, and quality preset, then watch it build."
 ---
 
 Generation is the core workflow in Editor AI. Open the panel, describe the level you want, and the AI builds it directly inside the Geometry Dash editor — placing objects on its own preview layer that you can accept, refine, or discard at any time.
@@ -15,7 +15,7 @@ Generation is the core workflow in Editor AI. Open the panel, describe the level
   <Step title="Go to the Generate tab">
     Inside the panel, select the **Generate** tab.
   </Step>
-  <Step title="Choose a Target">
+  <Step title="Choose a target">
     Pick where the AI should build:
     - **Current editor** — works on the level you already have open
     - **New level** — creates a brand-new level and opens it automatically
@@ -34,7 +34,7 @@ Generation is the core workflow in Editor AI. Open the panel, describe the level
 
 ## Prompt tips
 
-The AI reads your existing level content before it starts building, so your prompt can reference what's already there.
+The AI reads your existing level before generating, so your prompt can reference what's already there.
 
 - **Be descriptive about both gameplay and visuals.** "A hard cube level with tight spike timing and a dark industrial theme" gives the AI much more to work with than "a hard level."
 - **Include mood, references, and special requests.** Try "Inspired by Cataclysm, with sawblades and flashing colors" or "Lo-fi aesthetic with pastel blocks and relaxed timing."
@@ -48,21 +48,25 @@ The AI reads your existing level content before it starts building, so your prom
 
 ### Difficulty
 
-Controls the target difficulty the AI aims for. Preset values are `easy`, `medium`, `hard`, and `extreme`, but any free-form text is accepted — try `demon`, `tutorial`, or `grandma-friendly`.
+Controls the target difficulty the AI aims for. Preset values are `easy`, `medium`, `hard`, and `extreme`, but any free-form text is accepted — try `demon`, `tutorial`, or `grandma-friendly`. Default: `medium`.
 
 ### Style
 
-Sets the visual and gameplay style. Presets are `modern`, `retro`, `flow`, and `memory`. Free-form text is accepted here too — describe any aesthetic you have in mind.
+Sets the visual and gameplay style. Presets are `modern`, `retro`, `flow`, and `memory`. Free-form text is accepted here too — describe any aesthetic you have in mind. Default: `modern`.
 
 ### Length
 
-Sets the approximate level length. Presets are `short`, `medium`, `long`, `xl`, and `xxl`. Free-form text is accepted if you want something more specific.
+Sets the approximate level length. Presets are `short`, `medium`, `long`, `xl`, and `xxl`. Free-form text is accepted if you want something more specific. Default: `medium`.
 
 ## Target Object Count
 
-**Default: 0 (off).** When set to a positive number, the AI is instructed to keep generating rounds until the total object count reaches at least that value. The maximum is 20,000 objects. Leave it at 0 to let the AI decide when the level is complete.
+**Setting:** `target-object-count` — **Default:** 0 (off) — **Range:** 0–20,000
+
+When set to a positive number, the AI is instructed to keep generating rounds until the total object count reaches at least that value. Leave it at 0 to let the AI decide when the level is complete. The hard cap is 20,000 objects.
 
 ## Quality Preset
+
+**Setting:** `quality-profile` — **Default:** `premium`
 
 Controls the tradeoff between speed and output quality.
 

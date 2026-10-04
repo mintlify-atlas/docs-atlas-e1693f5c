@@ -1,5 +1,5 @@
 ---
-title: "Advanced Editor AI Configuration and Limits"
+title: "Editor AI Advanced Configuration and Safety Limits"
 sidebarTitle: "Advanced"
 description: "Advanced Editor AI settings for power users — rate limiting, feedback tuning, character filter bypasses, telemetry, and the 20,000-object safety cap."
 ---
@@ -78,16 +78,16 @@ Editor AI includes an entirely opt-in community training pipeline. Nothing is ev
 When telemetry is enabled:
 
 <CardGroup cols={2}>
-  <Card title="What is uploaded" icon="upload">
+  <Card title="What is uploaded" icon="upload" href="/configuration/advanced#telemetry-opt-in">
     Your prompt, generation settings, the AI's output objects, and any ratings (yours and the AI's self-review score).
   </Card>
-  <Card title="What is never uploaded" icon="shield">
+  <Card title="What is never uploaded" icon="shield" href="/configuration/advanced#telemetry-opt-in">
     Your identity, username, device info, API keys, or any other personal data.
   </Card>
-  <Card title="Training threshold" icon="star">
-    Generations rated above **5 out of 10** are promoted to training data for the free community models hosted on the Platinum Ollama network.
+  <Card title="Training threshold" icon="star" href="/configuration/advanced#telemetry-opt-in">
+    Levels rated above **5** are promoted to training data for the free community models.
   </Card>
-  <Card title="How to opt out" icon="toggle-off">
+  <Card title="How to opt out" icon="toggle-off" href="/configuration/advanced#telemetry-opt-in">
     Leave `allow-telemetry` set to `false` (the default). You can toggle it at any time; the change takes effect on the next generation.
   </Card>
 </CardGroup>

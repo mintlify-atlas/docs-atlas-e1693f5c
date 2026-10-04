@@ -20,11 +20,11 @@ A session moves through a defined set of states as it progresses. You can see th
 
 ## Following up
 
-Once a generation is done, you can keep the conversation going directly from the **Sessions** tab. Type a message and choose a `mode` to control what the AI does with it:
+Once a generation is done, you can keep the conversation going directly from the **Sessions** tab. Type a message and choose a mode to control what the AI does with it:
 
-- **Default (edit)** — The AI modifies the level based on your message. Use this for refinements like "make the ship section longer" or "swap the background to a forest theme."
-- **Plan** — The AI writes out a design plan without placing any objects. Useful for workshopping ideas before committing to changes.
-- **Chat** — The AI answers your question without producing any script output. Good for asking "what style would complement this section?" or "how many objects do I have?"
+- **Edit (mode 0)** — The AI modifies the level based on your message. Use this for refinements like "make the ship section longer" or "swap the background to a forest theme."
+- **Plan (mode 1)** — The AI writes out a design plan without placing any objects. Useful for workshopping ideas before committing to changes.
+- **Chat (mode 2)** — The AI answers your question without producing any script output. Good for asking "what style would complement this section?" or "how many objects do I have?"
 
 Some example follow-ups to try:
 
@@ -39,9 +39,9 @@ Restyle the whole thing with a cyberpunk theme.
 
 Editor AI manages conversation memory carefully so long sessions stay coherent without blowing up your API context budget.
 
-- **`transcript`** is the visible log shown in the Sessions tab. It includes all entry types — user messages, assistant replies, tool calls, status updates, and errors. The transcript rolls at 400 entries; the oldest entries fall off first so the log keeps flowing rather than freezing.
-- **`chat`** is the durable AI context — only user and assistant turns, no tool noise. This is what the AI's context is rebuilt from after a restart. It is capped at roughly 36,000 characters of total text before folding begins.
-- **`chatSummary`** is a running digest of the oldest folded turns. When the live `chat` array grows too large, the earliest exchanges are condensed into brief "Request / Outcome" digest lines and appended here. The summary itself is also bounded — its head (the original-request era) and its newest tail are kept, with a note marking anything condensed in between. This means an arbitrarily long conversation always rebuilds into a prompt of roughly *summary + last N turns*, never the full history.
+- **`transcript`** is the visible log shown in the Sessions tab. It includes all entry types — user messages, assistant replies, tool calls, status updates, and errors. The transcript rolls at **400 entries**; the oldest entries fall off first so the log keeps flowing rather than freezing.
+- **`chat`** is the durable AI context — only user and assistant turns, no tool noise. This is what the AI's context is rebuilt from after a restart. It is capped at roughly **36,000 characters** of total text before folding begins.
+- **`chatSummary`** is a running digest of the oldest folded turns. When the live `chat` array grows too large, the earliest exchanges are condensed into brief "Request / Outcome" digest lines and appended here. The summary is itself bounded at **8,000 characters** — its head (first 2,000 chars, preserving the original-request era) and its newest tail (last 5,000 chars) are kept, with a note marking anything condensed in between. This means an arbitrarily long conversation always rebuilds into a prompt of roughly *summary + last N turns*, never the full history.
 - **`workingState`** is a compact one-line summary of the level's current condition, refreshed after every generation and follow-up. It is persisted with the session and re-injected into the AI context when the session resumes — so the AI always has an accurate answer to "what did you change last time?" even across restarts.
 
 ## Resuming after a restart
@@ -56,7 +56,7 @@ The engine is reconstructed lazily the first time you send a message to a restor
 
 ## Rating a session
 
-After a generation completes, a thumbs-up / thumbs-down rating prompt (1–10 scale) appears in the session. Your rating is stored alongside the prompt, settings, and generated objects for that session. Ratings are used as few-shot examples to guide future generations — the AI uses up to **Feedback Examples** (default 3, max 10) of your past rated sessions as context when starting new ones, so it gradually learns your taste.
+After a generation completes, a rating prompt appears in the session (1–10 scale, controlled by the `needsRating` flag). Your rating is stored alongside the prompt, settings, and generated objects for that session. Ratings are used as few-shot examples to guide future generations — the AI uses up to **Feedback Examples** (default 3, max 10) of your past rated sessions as context when starting new ones, so it gradually learns your taste.
 
 To opt out of the rating prompt entirely, disable **Rate Generations** in Settings → Interface.
 
