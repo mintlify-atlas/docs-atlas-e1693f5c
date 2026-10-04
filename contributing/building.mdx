@@ -1,0 +1,94 @@
+---
+title: "Build Editor AI from Source with the Geode SDK"
+sidebarTitle: "Building"
+description: "Set up the Geode SDK toolchain, clone the Editor AI repository, and compile a .geode mod file for Windows, macOS, Android, or iOS."
+---
+
+Editor AI is built with the Geode SDK build system. Compiling from source requires Geode's CMake toolchain and a platform-appropriate C++ compiler. The project uses C++23 and is structured as a standard Geode mod with a shared library output — the Geode SDK handles packaging the final `.geode` file automatically.
+
+## Prerequisites
+
+<CardGroup cols={2}>
+  <Card title="Geode SDK" icon="toolbox" href="https://docs.geode-sdk.org">
+    The CMake toolchain, mod packaging utilities, and Geode CLI. Required for all platforms.
+  </Card>
+  <Card title="CMake 3.21+" icon="hammer" href="https://cmake.org/download/">
+    The minimum CMake version required by the project's `CMakeLists.txt`. Must be on your `PATH`.
+  </Card>
+  <Card title="C++ Compiler" icon="code" href="https://docs.geode-sdk.org">
+    **Windows** — MSVC 2022. **macOS / iOS** — Clang 14+. **Android** — NDK r27.
+  </Card>
+  <Card title="Geometry Dash" icon="gamepad" href="https://store.steampowered.com/app/322170/Geometry_Dash/">
+    Required for local testing. Install the `.geode` output into your Geode mods folder and launch the game to verify.
+  </Card>
+</CardGroup>
+
+## Geode SDK Version
+
+Editor AI targets **Geode `5.10.1`** and **Geometry Dash `2.2081`** on all supported platforms: `win`, `android`, `mac`, and `ios`. Make sure your Geode installation matches before building.
+
+## Clone and Build
+
+<Steps>
+  <Step title="Install the Geode CLI">
+    Follow the official setup guide at [docs.geode-sdk.org](https://docs.geode-sdk.org) to install the Geode CLI and configure the `GEODE_SDK` environment variable. The CMake configuration will fail with a fatal error if `GEODE_SDK` is not set.
+  </Step>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/Entity12208/EditorAI.git
+    cd EditorAI
+    ```
+  </Step>
+  <Step title="Configure with CMake">
+    Geode's toolchain is pulled in via the `GEODE_SDK` subdirectory. Run a standard CMake configure and build:
+
+    ```bash
+    cmake -B build -DCMAKE_BUILD_TYPE=Release
+    cmake --build build
+    ```
+
+    The `setup_geode_mod()` call at the end of `CMakeLists.txt` wires up Geode packaging automatically — no extra flags are needed for a basic Release build.
+  </Step>
+  <Step title="Locate the compiled .geode file">
+    After the build succeeds, the packaged `.geode` file will appear in the build output directory. The exact path depends on your CMake generator and platform, but it will be named after the mod ID (`entity12208.edit-ai.geode`).
+  </Step>
+  <Step title="Install for testing">
+    Copy the `.geode` file into your Geode mods folder, or use the `geode install` command if your CLI version supports it. Restart Geometry Dash to load the mod.
+  </Step>
+</Steps>
+
+## CI/CD Build Matrix
+
+The repository ships a GitHub Actions workflow (`.github/workflows/multi-platform.yml`) that builds the mod on every push using the official `geode-sdk/build-geode-mod@main` action. The matrix covers all five supported targets:
+
+| Platform | Runner | Target |
+|---|---|---|
+| Windows | `windows-latest` | *(default)* |
+| macOS | `macos-latest` | *(default)* |
+| iOS | `macos-latest` | `iOS` |
+| Android32 | `ubuntu-latest` | `Android32` |
+| Android64 | `ubuntu-latest` | `Android64` |
+
+All per-platform artifacts are combined into a single downloadable archive by the `geode-sdk/build-geode-mod/combine` step in the `package` job, then uploaded via `actions/upload-artifact@v4` under the name **Build Output**.
+
+<Tip>
+  Use the `geode-sdk/build-geode-mod` GitHub Action for CI — it handles cross-platform compilation, combining, and artifact upload automatically. Set `combine: true` on each matrix job and add a separate `package` job that calls `geode-sdk/build-geode-mod/combine@main`.
+</Tip>
+
+## Source Layout
+
+Understanding the repository structure makes it easier to find the right file when contributing.
+
+| Path | Purpose |
+|---|---|
+| `src/main.cpp` | Core engine: generation loop, AI API calls, object placement, settings bridge, session persistence, and OAuth flows |
+| `src/overlay.cpp` | ImGui-based UI panel — the floating window opened with **E** on desktop or the **AI** bubble on mobile |
+| `src/sessions.hpp` | `GenSession` struct and the public API surface shared between the engine and the overlay |
+| `src/design_knowledge.hpp` | Inline level design guidance injected into AI prompts to steer object placement quality |
+| `mod.json` | Mod manifest: ID (`entity12208.edit-ai`), version, settings schema, dependencies, and resource declarations |
+| `resources/object_ids.json` | Mapping of object type names to Geometry Dash object IDs used during placement |
+| `resources/example_sections.json` | Few-shot level section examples injected into prompts to ground the AI's output |
+
+<Note>
+  The Geode SDK documentation at [docs.geode-sdk.org](https://docs.geode-sdk.org) is the canonical reference for the build system, SDK APIs, hook macros, and the full mod publishing workflow.
+</Note>

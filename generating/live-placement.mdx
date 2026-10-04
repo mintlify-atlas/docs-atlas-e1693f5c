@@ -1,0 +1,46 @@
+---
+title: "Live Block Placement in Editor AI"
+sidebarTitle: "Live Placement"
+description: "With Live Block Placement on, Editor AI places blocks in the Geometry Dash editor as the AI generates them — see your level take shape in real time."
+---
+
+By default, Editor AI places each round of blocks into the editor while the AI is still working. You don't have to wait for the full generation to finish before seeing results — the level builds itself in front of you, object by object.
+
+## How it works
+
+The AI generates objects in multiple rounds. With **Live Block Placement** enabled, each round's objects are placed onto the editor's dedicated AI layer as soon as they arrive from the API. The rest of your existing level fades back visually so the incoming AI build stands out clearly. Once the full generation is complete, the final result stays on the AI layer for your review.
+
+## Spawn Speed
+
+**Setting:** `spawn-batch-size` — **Default:** 8 — **Range:** 1–100
+
+Controls how many objects are placed per editor tick during the live preview. Higher values push blocks in faster but can cause visual jank as the editor processes a large batch at once. Lower values produce a smoother, more readable streaming appearance. Adjust to taste based on your device's performance.
+
+## Ground Y
+
+**Setting:** `ai-ground-y` — **Default:** 105 — **Range:** 15–300
+
+The editor Y coordinate that Editor AI treats as the visible ground line. The default of 105 matches the standard Geometry Dash ground position. If generated blocks consistently float above the ground or sink below it, adjust this value:
+
+- **Lower the value** if blocks are floating above the ground.
+- **Higher the value** if blocks are burying into or below the ground.
+
+## Accept, Edit, or Deny
+
+When generation finishes, the complete build remains on the AI layer. You have three options:
+
+- **Accept** — Merges the AI layer permanently into your level. The preview layer is dissolved and the objects become part of the level normally.
+- **Edit** — Keeps the AI layer active so you can manually adjust objects before committing. Treat the AI's build as a starting point and sculpt from there.
+- **Deny** — Discards the AI build entirely and removes the layer, leaving your original level untouched.
+
+## Disabling live placement
+
+Turn off **Live Block Placement** in Settings → Placement & Editor to switch to batch mode. In batch mode, no objects are placed until the entire generation is complete — all objects arrive at once when the AI finishes. This is useful on slower devices where per-round placements cause noticeable hitching, or when you prefer to review a finished build rather than watch it form incrementally.
+
+<Tip>
+  You can close the panel — or even exit the editor — while a generation is running. The session continues in the background. When the result is ready to review, return to the panel and navigate to the Sessions tab to find it staged and waiting.
+</Tip>
+
+<Note>
+  Live placement is cosmetic and for review purposes only. Accept and Deny always operate on the complete final build, not just the portion that was visible while blocks were streaming in.
+</Note>

@@ -1,0 +1,60 @@
+---
+title: "Install Editor AI in Geometry Dash with Geode"
+sidebarTitle: "Installation"
+description: "Download and install the Editor AI Geode mod on Windows, macOS, Android, or iOS in three steps — no developer tools needed."
+---
+
+Editor AI is distributed as a single `.geode` file — the standard package format for Geometry Dash mods built on the Geode SDK. Because it is not listed on the Geode mod index, you install it through Geode's built-in manual install flow rather than the in-game browser. The process takes about a minute and requires no developer tools, no command line, and no patching of any game files.
+
+## Prerequisites
+
+You need two things in place before installing Editor AI.
+
+<CardGroup cols={2}>
+  <Card title="Geode Mod Loader" icon="puzzle-piece" href="https://geode-sdk.org">
+    Geode is the mod loader that runs Editor AI. If you have not installed it yet, follow the official guide at geode-sdk.org — it supports Windows, macOS, Android, and iOS.
+  </Card>
+  <Card title="Geometry Dash 2.2081" icon="gamepad" href="https://store.steampowered.com/app/322170/Geometry_Dash/">
+    Editor AI targets GD version 2.2081 on all four platforms. Older or newer GD versions are not guaranteed to be compatible.
+  </Card>
+</CardGroup>
+
+## Installation steps
+
+<Steps>
+  <Step title="Download the latest .geode file">
+    Go to the [Editor AI releases page](https://github.com/entity12208/editorai/releases/latest) on GitHub and download the `.geode` file from the latest release. This single file contains builds for all supported platforms — Geode picks the right one automatically when you install it.
+  </Step>
+  <Step title="Open the Geode page in Geometry Dash">
+    Launch Geometry Dash. On the main menu, look for the **Geode** button in the bottom-right corner and tap or click it to open the Geode overlay.
+  </Step>
+  <Step title="Use the manual install button">
+    Inside the Geode overlay, press the **manual install** button. A file picker will open. Navigate to the `.geode` file you downloaded in step 1 and select it. Geode will validate and import the mod.
+  </Step>
+  <Step title="Restart the game">
+    Geode will prompt you to restart. Do so — once the game reloads, Editor AI is active and the panel is available everywhere in the game.
+  </Step>
+</Steps>
+
+## Opening the panel
+
+Once installed, the Editor AI panel is one keypress away anywhere in the game.
+
+- **Desktop (Windows / macOS):** Press **`E`** to open or close the panel. The hotkey is rebindable in **Settings → Hotkey Priority** — scroll down to find the EditorAI binding.
+- **Mobile (Android / iOS):** Look for the floating **AI** bubble on screen. Tap it to open or dismiss the panel.
+
+The panel contains everything: the **Generate** tab to start new generations, the **Sessions** tab to browse and continue past conversations, and the **Settings** tab for all configuration options. Every control in the panel has a hover tooltip explaining what it does.
+
+## Updating
+
+Editor AI checks GitHub for new releases once a day (controlled by the **Check For Updates** toggle in Settings). When a newer version is found, a prompt appears inside the game with a one-click install option. Nothing downloads or installs automatically — your confirmation is always required.
+
+If you prefer to update manually, simply download the new `.geode` file from the [releases page](https://github.com/entity12208/editorai/releases/latest) and repeat the manual install steps above. Geode will replace the old version.
+
+<Warning>
+  Editor AI is **not on the Geode index**. The only official source for the mod is the [GitHub releases page](https://github.com/entity12208/editorai/releases/latest). Do not install `.geode` files from any other source — they could be outdated, modified, or malicious.
+</Warning>
+
+<Info>
+  Editor AI declares a non-breaking incompatibility with **`alk.editor-collab`** (the Editor Collab mod). Running both mods at the same time may cause unexpected behavior in the editor. If you use Editor Collab, consider disabling it while using Editor AI, or be aware that some editor interactions may not work as expected when both are active simultaneously.
+</Info>

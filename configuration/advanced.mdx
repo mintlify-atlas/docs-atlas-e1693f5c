@@ -1,0 +1,131 @@
+---
+title: "Advanced Editor AI Configuration and Limits"
+sidebarTitle: "Advanced"
+description: "Advanced Editor AI settings for power users — rate limiting, feedback tuning, character filter bypasses, telemetry, and the 20,000-object safety cap."
+---
+
+Most users won't need to touch these settings. This page covers rate limiting, feedback tuning, telemetry, and a few quality-of-life options for power users. Everything here lives under the **Advanced & Limits** and **Privacy** sections of the Geode Settings panel for Editor AI.
+
+## Rate Limiting
+
+Editor AI can throttle how quickly you fire generation requests at a provider. This matters most for hosted APIs that enforce rate quotas — a single multi-round generation already makes several API calls, so unbounded rapid-fire retries can drain a free-tier quota in minutes.
+
+<ParamField path="enable-rate-limiting" type="bool" default="true">
+  Throttle generations. Leave on for hosted APIs to avoid quota burns.
+</ParamField>
+
+<ParamField path="rate-limit-seconds" type="int" default="3">
+  Minimum seconds between generations when rate limiting is on.
+
+  Range: `1` – `60`
+</ParamField>
+
+<Warning>
+  Disabling rate limiting with hosted providers may exhaust your API quota quickly. Keep it enabled unless you are running a local provider (Ollama, LM Studio, llama.cpp) that has no external quota.
+</Warning>
+
+## Feedback & Few-Shot Examples
+
+After each generation, Editor AI can ask you to rate the result. Those ratings power a personalised few-shot loop: high-rated examples are fed back into future prompts so the AI learns your taste over time.
+
+<ParamField path="max-feedback-examples" type="int" default="3">
+  How many past rated generations to use as few-shot context.
+
+  Range: `1` – `10`
+</ParamField>
+
+**How the feedback loop works:**
+
+<Steps>
+  <Step title="You rate a generation">
+    After a generation completes, the thumbs up/down (or numeric) rating prompt appears (controlled by **Rate Generations** in the Interface section). Your score is saved alongside the prompt, settings snapshot, and generated objects.
+  </Step>
+  <Step title="Examples are ranked">
+    Editor AI ranks your saved ratings and picks the top `max-feedback-examples` results as candidate examples.
+  </Step>
+  <Step title="Examples are injected into the next prompt">
+    The selected examples are prepended to the system context of your next generation as few-shot demonstrations, showing the model what you consider a good output.
+  </Step>
+  <Step title="Quality improves over time">
+    The more you rate, the better the AI's sense of your preferred style, difficulty, and object density. Higher values of `max-feedback-examples` include more examples but produce longer prompts, which can increase cost and latency on hosted providers.
+  </Step>
+</Steps>
+
+## Character Filter Bypass
+
+These two settings patch GD's text-field behaviour globally while the mod is active.
+
+<ParamField path="bypass-char-filter" type="bool" default="false">
+  Let every text box in the game accept any printable character (same behavior as Eclipse Menu's bypass). Off = vanilla filtering.
+</ParamField>
+
+<ParamField path="bypass-char-limit" type="bool" default="false">
+  Remove the maximum text length on every text box in the game (same behavior as Eclipse Menu's bypass). Off = vanilla limits.
+</ParamField>
+
+<Note>
+  These affect **ALL** text boxes in GD while the mod is active, not just Editor AI fields. They're useful if you want to type long prompts or special characters into the in-game prompt box, but keep in mind the effect is game-wide — level name fields, song search, and other inputs are also affected.
+</Note>
+
+## Telemetry (opt-in)
+
+Editor AI includes an entirely opt-in community training pipeline. Nothing is ever uploaded by default.
+
+<ParamField path="allow-telemetry" type="bool" default="false">
+  Opt-in. While ON, every generation is uploaded automatically to the community training collector: prompt, settings, generated objects, and ratings (yours and the AI's self-review). Never your identity, never API keys. Levels rated above 5 become training data for the free community models.
+</ParamField>
+
+When telemetry is enabled:
+
+<CardGroup cols={2}>
+  <Card title="What is uploaded" icon="upload">
+    Your prompt, generation settings, the AI's output objects, and any ratings (yours and the AI's self-review score).
+  </Card>
+  <Card title="What is never uploaded" icon="shield">
+    Your identity, username, device info, API keys, or any other personal data.
+  </Card>
+  <Card title="Training threshold" icon="star">
+    Generations rated above **5 out of 10** are promoted to training data for the free community models hosted on the Platinum Ollama network.
+  </Card>
+  <Card title="How to opt out" icon="toggle-off">
+    Leave `allow-telemetry` set to `false` (the default). You can toggle it at any time; the change takes effect on the next generation.
+  </Card>
+</CardGroup>
+
+<Info>
+  Telemetry is strictly opt-in. Nothing is uploaded unless you turn this on. The community training data is used only to improve the free `entity12208/editorai` Ollama models available to all players.
+</Info>
+
+## Object Safety Cap
+
+Every generation is bounded by a hard cap of **20,000 objects** (the `EAI_OBJECT_CAP` constant in source). This is a runaway guard — not a target — and is never reached under normal use.
+
+There is no user setting for this cap. The AI naturally sizes its output to the level length and object-count target you specify; the cap only exists to prevent a runaway generation loop from flooding your editor.
+
+<Tip>
+  Use the **Target Objects** setting (`target-object-count`, range 0–20000) to request a *minimum* object count from the AI. Set it to `0` to let the AI decide the object count freely based on length and style.
+</Tip>
+
+## Save AI Output
+
+<ParamField path="show-ai-output" type="bool" default="false">
+  Write each generation's full raw AI response to `last-ai-response.txt` in this mod's save folder. Off by default.
+</ParamField>
+
+When enabled, the complete unprocessed text response from the model — before any parsing or object extraction — is written to disk after every generation. This is useful for:
+
+- Debugging unexpected level output or missing objects
+- Inspecting tool-call sequences to understand why the AI made certain decisions
+- Reporting bugs with full context
+
+The file is overwritten on each generation, so save a copy if you need to compare runs. The save folder is typically at `%APPDATA%\Roaming\Geode\mods\entity12208.edit-ai\` on Windows.
+
+## UI Animation Speed
+
+<ParamField path="ui-anim-speed" type="int" default="8">
+  How fast the EditorAI panel opens and closes. `1` = slow fade (2 seconds), `10` = instant.
+
+  Range: `1` – `10`
+</ParamField>
+
+This is a pure cosmetic preference. Lower values give a smooth cinematic fade; `10` removes the animation entirely for maximum responsiveness. The default of `8` is a fast-but-visible slide that fits GD's native UI feel.

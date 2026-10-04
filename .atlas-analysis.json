@@ -1,0 +1,135 @@
+{
+  "projectType": "general",
+  "projectName": "Editor AI",
+  "projectDescription": "A Geometry Dash Geode mod that lets you describe a level in plain words and have AI build it for you in the editor, with live block placement, session management, and support for a wide range of AI providers.",
+  "theme": "palm",
+  "primaryColor": "#f0c040",
+  "lightColor": "#07080c",
+  "darkColor": "#3cdbf4",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "AI Providers",
+            "pages": [
+              "providers/overview",
+              "providers/free-providers",
+              "providers/hosted-providers",
+              "providers/local-providers",
+              "providers/custom-provider"
+            ]
+          },
+          {
+            "group": "Generating Levels",
+            "pages": [
+              "generating/generate",
+              "generating/sessions",
+              "generating/live-placement",
+              "generating/two-pass",
+              "generating/copilot-mode"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/settings-reference",
+              "configuration/advanced"
+            ]
+          },
+          {
+            "group": "Contributing",
+            "pages": [
+              "contributing/building",
+              "contributing/guidelines"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Describe a level in plain text and have AI generate it directly in the Geometry Dash editor",
+    "Live block placement — blocks appear in the editor while the AI is still working",
+    "Support for 13 AI providers including Gemini, Claude, OpenAI, Mistral, DeepSeek, Groq, HuggingFace, OpenRouter, Ollama, LM Studio, llama.cpp, custom endpoints, and manual mode",
+    "Free Platinum community cloud (volunteer Ollama servers) and fully local Ollama — no account required",
+    "Session-based conversation memory that survives game restarts, with follow-up editing",
+    "Two-pass generation: gameplay skeleton first, then decoration/color pass",
+    "AI Copilot mode that watches for death zones and physics problems and proposes auto-fixes",
+    "AI vision (level snapshots) for models that support images (Claude, Gemini, GPT-4o, LLaVA)",
+    "Song analysis (BPM + waveform) to sync gameplay to the music",
+    "Goal-setting with a self-managed task checklist and refinement-until-done mode",
+    "Rating system and opt-in telemetry that feeds community model training",
+    "Cross-platform: Windows, macOS, Android, iOS"
+  ],
+  "publicApiSurface": [
+    "editoraiStartGeneration(target, prompt, replaceContents, err, expectedName)",
+    "editoraiSendFollowUp(session, text, mode)",
+    "editoraiCancelSession(session)",
+    "editoraiOpenGenerator()",
+    "editoraiRateSession(session, rating)",
+    "editoraiGoToSessionLevel(session)",
+    "editoraiShareSession(session, err)",
+    "editoraiExportSession(session, err)",
+    "editoraiManualCopy(prompt, replaceContents, err)",
+    "editoraiManualPending()",
+    "editoraiManualBuild(err)",
+    "editoraiGetOllamaModels(out)",
+    "editoraiRefreshOllamaModels()",
+    "editoraiListLocalLevels()",
+    "editoraiListSavedLevels()",
+    "editoraiTestProvider()",
+    "editoraiTestStatus()",
+    "editoraiProbeLocalBackends()",
+    "editoraiDetectedBackends()",
+    "editoraiOAuthAvailable(provider)",
+    "editoraiOAuthStart(provider)",
+    "editoraiOAuthTick(dt)",
+    "editoraiOAuthStatus()",
+    "editoraiOAuthActive()",
+    "editoraiGetStr(id) / editoraiSetStr(id, v)",
+    "editoraiGetBool(id) / editoraiSetBool(id, v)",
+    "editoraiGetInt(id) / editoraiSetInt(id, v)",
+    "editoraiGetSavedStr(key, def) / editoraiSetSavedStr(key, v)",
+    "editoraiGetSavedInt(key, def) / editoraiSetSavedInt(key, v)",
+    "editoraiMarkSessionsDirty()",
+    "editoraiPersistSessionsIfDirty()",
+    "editoraiIsGDTextInputActive()",
+    "genSessions()",
+    "GenSession struct (id, title, state, transcript, chat, chatSummary, flowPhase, liveStatus, workingState)",
+    "GenSession::push(kind, text)",
+    "GenSession::chatPush(role, text)",
+    "GenSession::stateName()",
+    "mod setting: ai-provider (gemini|claude|openai|openrouter|ministral|huggingface|deepseek|groq|ollama|lm-studio|llama-cpp|custom|manual)",
+    "mod setting: difficulty (easy|medium|hard|extreme|free-form)",
+    "mod setting: style (modern|retro|flow|memory|free-form)",
+    "mod setting: length (short|medium|long|xl|xxl|free-form)",
+    "mod setting: target-object-count (int, 0=off)",
+    "mod setting: live-placement (bool)",
+    "mod setting: spawn-batch-size (int)",
+    "mod setting: ai-ground-y (int)",
+    "mod setting: edit-target-ops (int)",
+    "mod setting: quality-profile (fast|balanced|premium)",
+    "mod setting: enable-ai-tools (bool)",
+    "mod setting: show-goal-tasks (bool)",
+    "mod setting: enable-advanced-features (bool)",
+    "mod setting: refinement-rounds (int)",
+    "mod setting: refine-until-done (bool)",
+    "mod setting: ai-playtest (bool)",
+    "mod setting: enable-self-critique (bool)",
+    "mod setting: enable-vision (bool)",
+    "mod setting: two-pass-generation (bool)",
+    "mod setting: copilot-mode (bool)",
+    "mod setting: use-platinum (bool)",
+    "mod setting: allow-telemetry (bool)"
+  ]
+}

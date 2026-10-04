@@ -1,0 +1,47 @@
+---
+title: "Two-Pass Generation for Better Level Quality"
+sidebarTitle: "Two-Pass"
+description: "Two-pass generation builds the gameplay skeleton first, then adds decoration, color triggers, and atmosphere in a separate pass — producing higher quality results."
+---
+
+When Two-Pass Generation is enabled (the default), Editor AI separates the work of building a level into two distinct phases. The AI focuses entirely on playability in the first pass, then dedicates the second pass to visual polish — without going back to touch what you already reviewed and accepted.
+
+## Pass 1 — Gameplay skeleton
+
+The first pass generates the structural core of the level: platforms, hazards, portals, orbs, pads, gravity changes, and the overall spatial layout. The AI concentrates purely on making the level playable and fun to navigate — no decorative objects, no color triggers, no background filler. When this pass finishes, the skeleton stages for review.
+
+You review the gameplay skeleton using the standard **Accept / Edit / Deny** flow. Accept it when you're happy with the layout, edit individual objects if you want to tweak something, or deny it to send the AI back to try again.
+
+## Pass 2 — Decoration and atmosphere
+
+After you accept the skeleton, a second generation pass begins automatically. This pass adds everything visual: decorative blocks, color triggers, move triggers, pulse effects, background and midground elements, atmospheric lighting — all layered on top of the gameplay structure that's already locked in place. The gameplay objects you reviewed in pass 1 are not touched.
+
+This second result stages for review exactly like the first. Accept, edit, or deny to finalize the decorated level.
+
+## Why it matters
+
+Generating gameplay and decoration simultaneously pulls the AI's attention in two directions at once — it tends to compromise on both. Separating the concerns lets the AI optimize pass 1 purely for challenge and flow, and pass 2 purely for aesthetics. In practice this produces more coherent levels with both better geometry and better-looking decoration than a single combined pass.
+
+## Enabling and disabling
+
+Toggle **Two-Pass Generation** in Settings → AI Behavior. The setting is on by default.
+
+When disabled, the AI attempts to generate gameplay and decoration together in a single pass. This is faster but typically produces lower-quality results.
+
+## Triggers and Colors
+
+**Setting:** `enable-advanced-features` — **Default:** on
+
+When this setting is enabled, the AI is allowed to emit color triggers, move triggers, pulse triggers, and group IDs during pass 2. These let it create dynamic visual effects like background color shifts, pulsing objects, and synchronized flashes.
+
+Disable this setting if you want pass 2 to place only static decorative objects — useful if your level already has hand-crafted triggers that you don't want the AI interfering with.
+
+## AI Vision
+
+**Setting:** `enable-vision` — **Default:** on
+
+For AI models that support image input — Claude, Gemini, GPT-4o, LLaVA, and others — Editor AI attaches a rendered snapshot of the current level to review and follow-up turns. This lets the AI literally see what it built, not just reason about object coordinates in the abstract. The result is more accurate refinements and better spatial awareness during pass 2 decoration.
+
+<Tip>
+  If you accept the skeleton but want to redo the decoration from scratch, send a follow-up message like "Redo the decoration with a neon theme." The AI will restyle the visual layer without modifying any gameplay objects.
+</Tip>

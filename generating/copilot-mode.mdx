@@ -1,0 +1,50 @@
+---
+title: "Copilot Mode: Automatic Physics and Death Zone Fixes"
+sidebarTitle: "Copilot Mode"
+description: "Copilot Mode watches your level as you edit and automatically proposes a fix blueprint whenever it detects death zones or physics problems — you always approve."
+---
+
+Copilot Mode turns Editor AI into a passive reviewer that watches alongside you as you build. While you edit your level manually, the AI monitors for death zones and physics problems in the background. When it finds one, it automatically generates a targeted fix blueprint and stages it for your review — the same **Accept / Edit / Deny** flow as any other generation, so you always have the final say.
+
+## How it works
+
+With Copilot Mode on, Editor AI observes the editor continuously. At most once every 2 minutes, if the AI detects a problem in your level — an unavoidable spike, a broken portal alignment, an unreachable section, or a physics inconsistency — it quietly starts a fix generation. When the fix is ready, it appears on the AI layer and stages for review, notifying you without interrupting what you're doing. You choose whether to accept, edit, or discard it.
+
+The 2-minute cooldown ensures Copilot doesn't flood you with proposals while you're actively placing objects. It waits until the situation has settled before raising its hand.
+
+## Enabling Copilot Mode
+
+Go to **Settings → AI Behavior** and toggle **Copilot Mode** on. The setting is off by default.
+
+<Warning>
+  Copilot Mode requires an active AI provider with available quota. For low-latency auto-fixes, use a fast provider such as Groq (free tier available) or a local Ollama instance — this keeps auto-fix response times short and avoids burning quota on slower hosted models.
+</Warning>
+
+## What it checks
+
+Copilot uses simulated playtesting (controlled by the **AI Playtest** setting) to evaluate the level between your edits. It looks for:
+
+- **Death zones** — spike placements, saw alignments, or tight corridors that are statistically unavoidable.
+- **Physics problems** — portal sequences that leave the player in an impossible state, jump sequences with no viable path, or gravity changes that strand the player.
+- **Portal alignment issues** — portals placed at heights or positions inconsistent with the gameplay leading into them.
+- **Layout inconsistencies** — structural gaps or disconnected segments that break the flow of the level.
+
+## Rate limit
+
+Copilot proposes at most one auto-fix every 2 minutes. This prevents a stream of interrupted proposals while you're actively editing and ensures each suggestion has time to be reviewed before the next one arrives.
+
+## AI Playtest
+
+**Setting:** `ai-playtest` — **Default:** on
+
+Allows the AI to run simulated playtests and inspect fresh rendered snapshots of the level between passes. This is what gives Copilot the information it needs to detect physics problems accurately. When enabled, the AI can stage drafts early — but only when doing so cannot overwrite an existing level that hasn't been reviewed yet.
+
+## Self-Critique
+
+**Setting:** `enable-self-critique` — **Default:** on
+
+After Copilot (or any generation) finishes its refinement passes, one additional round runs where the AI scores its own output and patches the single weakest area it identifies — or confirms the level is already in good shape. This costs at most one extra API call and tends to catch issues the main refinement loop missed.
+
+<Note>
+  Copilot Mode works best alongside **Two-Pass Generation**. When the two features are combined, Copilot evaluates the gameplay layer separately from the decoration layer, which gives it a cleaner signal for physics problems and reduces false positives caused by decorative objects.
+</Note>

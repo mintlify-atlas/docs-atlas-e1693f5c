@@ -1,0 +1,86 @@
+---
+title: "AI Provider Overview for Editor AI"
+sidebarTitle: "Overview"
+description: "Editor AI supports 13 AI providers — two free with no account, seven hosted with API keys, and four local/self-hosted options. Choose the one that fits your needs."
+---
+
+Editor AI is provider-agnostic. Configure any supported backend in **Settings → Providers** and switch at any time without losing your sessions. Whether you want zero-cost community inference, a frontier cloud model, or fully private local generation, there is a supported provider for every setup.
+
+## Provider Comparison
+
+| Provider | Cost | Account Required | Setup Effort | Notes |
+|---|---|---|---|---|
+| **Platinum** | Free | No | Minimal | Community Ollama proxy; volunteer-run servers by VLT GG |
+| **Ollama** | Free | No | Low | Fully local; 6+ GB VRAM recommended |
+| **Gemini** | Free tier / pay-as-you-go | Yes (Google account) | Low | Tight free-tier rate limits |
+| **Claude** | Pay-as-you-go | Yes (Anthropic) | Low | Strong reasoning; vision supported |
+| **OpenAI** | Pay-as-you-go | Yes (OpenAI) | Low | GPT-4o default; vision supported |
+| **OpenRouter** | Free tier / pay-as-you-go | Yes (or browser sign-in) | Low | One key accesses many hosted models |
+| **Mistral** | Pay-as-you-go | Yes (Mistral) | Low | European-hosted; good value |
+| **HuggingFace** | Free tier / pay-as-you-go | Yes (or browser sign-in) | Low | Repo-style model IDs |
+| **DeepSeek** | Pay-as-you-go | Yes (DeepSeek) | Low | Cost-effective; strong code/reasoning |
+| **Groq** | Free tier / pay-as-you-go | Yes (Groq) | Low | Very fast inference; free tier available |
+| **LM Studio** | Free | No | Medium | Local GUI app; OpenAI-compatible server |
+| **llama.cpp** | Free | No | Medium | Lightweight local server; GGUF models |
+| **Custom** | Varies | Varies | Medium | Any OpenAI-compatible endpoint (BYOPAK) |
+
+## Provider Categories
+
+<CardGroup cols={2}>
+  <Card
+    title="Free Providers"
+    icon="gift"
+    href="/providers/free-providers"
+  >
+    **Platinum** and **Ollama** — generate levels with no account and no API key. Platinum uses volunteer community servers; Ollama runs entirely on your machine.
+  </Card>
+  <Card
+    title="Hosted Providers"
+    icon="cloud"
+    href="/providers/hosted-providers"
+  >
+    **Gemini, Claude, OpenAI, OpenRouter, Mistral, HuggingFace, DeepSeek, Groq** — cloud APIs with frontier models. Paste an API key or use browser sign-in.
+  </Card>
+  <Card
+    title="Local Providers"
+    icon="server"
+    href="/providers/local-providers"
+  >
+    **LM Studio** and **llama.cpp** — run any GGUF or compatible model locally over an OpenAI-compatible HTTP endpoint. Fully private inference.
+  </Card>
+  <Card
+    title="Custom Provider"
+    icon="wrench"
+    href="/providers/custom-provider"
+  >
+    **BYOPAK** — point Editor AI at any OpenAI-compatible endpoint with a custom URL, model, and auth header template.
+  </Card>
+</CardGroup>
+
+## Changing Providers
+
+<Steps>
+  <Step title="Open the Editor AI panel">
+    Press **E** anywhere in the game (desktop) or tap the floating **AI** bubble (mobile).
+  </Step>
+  <Step title="Open Settings">
+    Inside the panel, press **Settings**.
+  </Step>
+  <Step title="Choose your provider">
+    Locate the **AI Provider** dropdown and select the backend you want to use.
+  </Step>
+  <Step title="Configure the provider section">
+    Scroll down to the matching provider section and fill in the required fields — API key, model name, or server URL depending on the provider.
+  </Step>
+  <Step title="Test your connection (optional)">
+    Press **Test Connection** in the provider row to confirm everything is reachable before running a generation.
+  </Step>
+</Steps>
+
+<Tip>
+  Use **Test Connection** in the provider row to verify your key or server is reachable before generating. A failed test gives you an error message with enough detail to diagnose the problem early.
+</Tip>
+
+<Info>
+  The **Subagent Provider** setting lets you route the internal consultant (`ask_subagent`) to a different provider — for example, directing it to **Platinum** for free background reasoning while using a paid model for main generation. Set it to `same` to mirror the main provider, or to `platinum` to always use the free community network for subagent calls regardless of your main provider.
+</Info>

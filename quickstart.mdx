@@ -1,47 +1,101 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Get Started with Editor AI: Your First AI Level"
+sidebarTitle: "Quickstart"
+description: "Build your first AI-generated Geometry Dash level in under 5 minutes using Editor AI — choose a free provider, describe your level, and review the result."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
-
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+This quickstart walks you through generating your very first level with Editor AI — from picking an AI provider and writing your first prompt, all the way to reviewing the finished result in the editor and refining it with follow-up messages. No API key is required for the free path; the whole process should take under five minutes.
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Open the Editor AI panel">
+    Press **`E`** anywhere in the game on desktop, or tap the floating **AI** bubble on mobile. The panel slides open from the side of the screen. You will see three tabs: **Generate**, **Sessions**, and **Settings**.
 
-    ```bash
-    npm install your-package
-    ```
+    If the panel does not open, confirm that Editor AI is listed and enabled in the Geode overlay (bottom-right of the main menu). See the [Installation guide](/installation) if you need to set it up first.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
 
-    ```bash
-    your-cli init
-    ```
+  <Step title="Choose a provider (free option)">
+    Go to the **Settings** tab, then find **AI Provider**. To use Editor AI for free with no account and no API key:
+
+    1. Set **AI Provider** to `ollama`.
+    2. Scroll down to the **Provider — Ollama** section and toggle **Use Platinum** ON.
+
+    Platinum routes your request through free, community-run servers provided by the [Platinum network](https://github.com/entity12208/editorai-platinum). Your prompt goes to a volunteer machine, so avoid including personal information. Generation may be slower during peak hours.
+
+    Alternatively, install [Ollama](https://ollama.com) locally, pull a model (6+ GB VRAM recommended), and leave **Use Platinum** OFF for fully private, offline generation.
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
 
-    ```bash
-    your-cli start
+  <Step title="Start a new generation">
+    Go to the **Generate** tab. At the top you will find the generation target selector — choose where the AI should build:
+
+    - **Current editor** — generates into the level you already have open.
+    - **Brand-new level** — creates a fresh level and opens it.
+    - **Created levels** — pick any existing level from your list.
+
+    For your first generation, **Brand-new level** is the safest choice since it cannot affect any existing work.
+  </Step>
+
+  <Step title="Describe your level">
+    Type your description in the prompt box. Below the prompt, set the **Difficulty**, **Style**, and **Length** fields — pick from the preset options or type your own free-form value (for example, `"nightmare demon"` or `"chill lo-fi"`).
+
+    Here is an example prompt to get you started:
+
+    ```text
+    A medium-difficulty cube level with a retro aesthetic. Spike trains, gradient
+    blocks, and a clean 8-bit color palette. Approximately 60 seconds long.
     ```
+
+    You do not need to be precise or technical. Plain English works perfectly well.
+  </Step>
+
+  <Step title="Press Generate and watch">
+    Press the **Generate** button. The AI begins thinking — you will see the status line update as it plans and writes.
+
+    With **Live Block Placement** on (the default), blocks appear in the editor in real time as each round of objects is placed. You can close the panel while generation runs, or even leave the editor entirely — the session continues in the background and you can come back to it at any time from the **Sessions** tab.
+  </Step>
+
+  <Step title="Review the result">
+    When generation finishes, the level appears on its own dedicated editor layer. The rest of your level fades back so the AI's work is easy to inspect. Three options appear:
+
+    - **Accept** — merges the AI's layer into your level permanently.
+    - **Edit** — stages the layer as a starting point and flags it for manual refinement.
+    - **Deny** — discards the layer entirely so you can adjust your prompt and try again.
+
+    Take your time — nothing is committed until you press Accept.
+  </Step>
+
+  <Step title="Refine with follow-up messages">
+    After accepting (or even before), open the **Sessions** tab. You will see the conversation thread for this generation. Send a follow-up message just as you would in a chat app:
+
+    - `"Make the ship section longer"`
+    - `"Add more decoration around the platforms"`
+    - `"Replace the spikes with sawblades"`
+    - `"The middle feels empty — fill it with more objects"`
+
+    The AI edits the level in-place. Each follow-up is a new entry in the same session, and sessions persist across restarts — you can come back days later and continue the conversation.
   </Step>
 </Steps>
 
 <Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
-
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+  If you are not sure what to write in the prompt, just describe a feeling or a theme rather than specific objects. Phrases like `"spooky haunted castle"`, `"futuristic neon city"`, or `"calm ocean voyage"` give the AI plenty to work with. You can always get more specific in follow-up messages once you see what it produces.
 </Tip>
+
+<Note>
+  Generation time depends on your chosen provider and model. Platinum may be slower during peak community hours. For the fastest results, use **Groq** (free tier available at [console.groq.com/keys](https://console.groq.com/keys) — consistently the fastest hosted inference) or a local **Ollama** model running on a GPU.
+</Note>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="All AI Providers" icon="server" href="/providers/overview">
+    Compare all 13 supported providers — free options, hosted APIs, and local models — and find the best fit for your workflow.
+  </Card>
+  <Card title="Sessions & Follow-ups" icon="clock-rotate-left" href="/generating/sessions">
+    Learn how sessions persist, how to branch from any point, and how to get the most out of iterative generation.
+  </Card>
+  <Card title="Live Block Placement" icon="bolt" href="/generating/live-placement">
+    Understand how real-time placement works, how to tune spawn speed, and when to turn it off for cleaner results.
+  </Card>
+  <Card title="Settings Reference" icon="sliders" href="/configuration/settings-reference">
+    Full reference for every setting — quality presets, refinement rounds, copilot mode, vision, two-pass generation, and more.
+  </Card>
+</CardGroup>

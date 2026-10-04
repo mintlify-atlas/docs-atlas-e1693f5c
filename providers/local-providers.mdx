@@ -1,0 +1,70 @@
+---
+title: "Local AI Providers: LM Studio and llama.cpp"
+sidebarTitle: "Local Providers"
+description: "Run Editor AI against a local LM Studio or llama.cpp server — fully private inference with any OpenAI-compatible endpoint on your own hardware."
+---
+
+LM Studio and llama.cpp both expose OpenAI-compatible HTTP endpoints on your local machine. Editor AI connects to them over localhost, which means no data ever leaves your hardware — generation is entirely private, free of cost, and not subject to any external rate limits.
+
+---
+
+## LM Studio
+
+LM Studio is a desktop application that lets you download and run models through a graphical interface and then expose them via a built-in local server. It is the most beginner-friendly way to run a local model on Windows or macOS.
+
+**Default URL:** `http://localhost:1234`
+
+### Setup
+
+<Steps>
+  <Step title="Download LM Studio">
+    Download and install LM Studio from [lmstudio.ai](https://lmstudio.ai). It is available for Windows and macOS.
+  </Step>
+  <Step title="Load a model and start the server">
+    Open LM Studio, browse the model catalogue, download a model, and select it. Then navigate to the **Local Server** tab and press **Start Server**. Note the model name LM Studio reports — you will need it in the next step.
+  </Step>
+  <Step title="Configure Editor AI">
+    Open the Editor AI panel → **Settings**. Set **AI Provider** to `lm-studio`. Set **LM Studio URL** to the server address (default `http://localhost:1234`). Set **LM Studio Model** to the model name as reported by LM Studio.
+  </Step>
+</Steps>
+
+<Tip>
+  If you are unsure what model name LM Studio uses, set **LM Studio Model** to `default`. LM Studio will serve whichever model is currently loaded in the server tab. Use the exact name from the LM Studio UI if you run multiple models and need to target a specific one.
+</Tip>
+
+---
+
+## llama.cpp
+
+llama.cpp is a lightweight C++ inference engine that can run GGUF-format models with minimal dependencies. It is well-suited to headless servers, Linux systems, or situations where you want fine-grained control without a GUI.
+
+**Default URL:** `http://localhost:8080`
+
+### Setup
+
+<Steps>
+  <Step title="Build or download llama.cpp">
+    Clone and build [llama.cpp](https://github.com/ggerganov/llama.cpp) from source, or download a pre-built binary from the releases page. Make sure to include server support (the `server` target is built by default).
+  </Step>
+  <Step title="Start the server">
+    Launch the server binary, pointing it at your GGUF model file. Adjust the context size and port as needed.
+
+    ```bash
+    # Start llama.cpp server (example)
+    ./server -m ./models/deepseek-r1.gguf -c 4096 --port 8080
+    ```
+  </Step>
+  <Step title="Configure Editor AI">
+    Open the Editor AI panel → **Settings**. Set **AI Provider** to `llama-cpp`. Set **llama.cpp URL** to your server address (default `http://localhost:8080`). Set **llama.cpp Model** to the model name your server expects, or leave it as `default` if the server does not require a specific name.
+  </Step>
+</Steps>
+
+---
+
+## Auto-Detection
+
+Editor AI probes localhost for running Ollama, LM Studio, and llama.cpp servers on startup. If a server is detected, it is shown in **Settings → Providers** so you can switch to it without typing a URL manually. Auto-detection is passive and does not start or stop any local server process.
+
+<Note>
+  Editor AI uses OpenAI-compatible request bodies for all local providers. Any server that implements the `/v1/chat/completions` endpoint — including custom wrappers, Tabby ML, LocalAI, and others — should work when pointed to the LM Studio or llama.cpp URL fields. If your server is not officially listed, use the [Custom Provider](/providers/custom-provider) instead for full control over the endpoint URL and auth header.
+</Note>

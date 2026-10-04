@@ -1,0 +1,65 @@
+---
+title: "Editor AI: AI-Generated Geometry Dash Levels"
+sidebarTitle: "Introduction"
+description: "Editor AI is a Geode mod that generates Geometry Dash levels from a text description, placing blocks live in the editor with full AI provider flexibility."
+---
+
+Editor AI is a mod for Geometry Dash 2.2081 built on the Geode SDK. You describe the level you want in plain text — a theme, a difficulty, a mood, a gameplay style — and the AI builds it for you, live, right inside the editor. It runs on Windows, macOS, Android, and iOS, and supports thirteen different AI backends ranging from free community-run servers to your own local hardware. The result always lands on its own preview layer, so you stay in full control: keep it, tweak it, or throw it away and try again.
+
+## What is Editor AI?
+
+The core idea is simple: your words become a Geometry Dash level. You type a description — anything from "a short, spiky cube section with a retro palette" to "a long demon-difficulty ship corridor with wave transitions" — and Editor AI sends that prompt to the AI provider of your choice. The AI responds with structured level data, and Editor AI translates that into real editor objects placed on a dedicated preview layer that sits on top of your existing work.
+
+Once generation finishes (or even while it is still running, if Live Block Placement is on), you see the result in the editor. Three options are always on the table: **Accept** the layer and merge it into your level, mark it as **Edit** to flag it as a starting point you will refine yourself, or **Deny** it to discard and prompt again. Nothing modifies your level without your approval.
+
+Sessions persist across restarts. You can keep the conversation going indefinitely — small follow-up tweaks, full reworks, questions about GD objects, whatever you need. The AI remembers the context of every exchange in that session.
+
+## Key capabilities
+
+<CardGroup cols={2}>
+  <Card title="Live Block Placement" icon="bolt" href="/generating/live-placement">
+    Blocks appear in the editor while the AI is still generating — you watch the level take shape in real time rather than waiting for a finished batch.
+  </Card>
+  <Card title="Session Memory" icon="clock-rotate-left" href="/generating/sessions">
+    Every conversation is saved and survives game restarts. Send follow-up messages to refine, rework, or extend any previous generation without starting over.
+  </Card>
+  <Card title="13 AI Providers" icon="server" href="/providers/overview">
+    Gemini, Claude, OpenAI, Mistral, DeepSeek, Groq, HuggingFace, OpenRouter, Ollama, LM Studio, llama.cpp, a custom OpenAI-compatible endpoint, and the free community Platinum network.
+  </Card>
+  <Card title="Two-Pass Generation" icon="layer-group" href="/configuration/settings-reference">
+    The first pass builds the gameplay skeleton. A second pass then adds decoration, color triggers, and atmosphere — without touching the gameplay geometry.
+  </Card>
+  <Card title="Copilot Mode" icon="shield-halved" href="/configuration/settings-reference">
+    While you edit manually, Editor AI watches for death zones and physics problems and proposes a fix blueprint automatically — at most once every two minutes, always subject to your approval.
+  </Card>
+  <Card title="Vision (Level Snapshots)" icon="eye" href="/configuration/settings-reference">
+    On multimodal models (Claude, Gemini, GPT-4o, LLaVA, and others), the AI receives a rendered snapshot of the level so it can literally see what it built before deciding what to change next.
+  </Card>
+  <Card title="Song Analysis" icon="music" href="/configuration/settings-reference">
+    Editor AI can read the BPM and waveform of your level's song and use that information to sync gameplay timing and placement to the music.
+  </Card>
+  <Card title="Rating & Training" icon="star" href="/configuration/settings-reference">
+    Rate each generation with a thumbs up or down. Your ratings are used as few-shot context in future prompts so the AI learns your personal taste over time.
+  </Card>
+</CardGroup>
+
+## How it fits in GD
+
+Geode is the standard mod loader for Geometry Dash. It gives mods a safe, sandboxed way to hook into the game without patching the executable directly, and it provides a uniform settings and UI system that all Geode mods share. Editor AI is a Geode mod with the ID `entity12208.edit-ai`. It hooks the level editor to inject the AI panel, manage preview layers, and place objects programmatically.
+
+Editor AI is **not listed on the Geode mod index**. The Geode index guidelines do not allow mods that place objects in levels through automated means. Instead, Editor AI is distributed directly via GitHub Releases at [github.com/entity12208/editorai/releases](https://github.com/entity12208/editorai/releases). Every release ships as a single `.geode` file — one file, all four platforms, installed through the standard Geode manual-install flow.
+
+## Platform support
+
+| Platform | GD Version | Architecture |
+|---|---|---|
+| Windows | 2.2081 | x64 |
+| macOS | 2.2081 | x64 / ARM64 |
+| Android | 2.2081 | ARM32 & ARM64 |
+| iOS | 2.2081 | ARM64 |
+
+All four platforms ship from the same release artifact. The Geode build pipeline compiles for Windows, macOS, iOS, Android32, and Android64 in a single workflow run and packages them together.
+
+<Note>
+  Editor AI is **not available on the Geode index** and cannot be installed through the in-game mod browser. You must install it manually from the official GitHub releases page. See the [Installation guide](/installation) for step-by-step instructions.
+</Note>

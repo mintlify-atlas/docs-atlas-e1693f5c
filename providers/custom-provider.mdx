@@ -1,0 +1,66 @@
+---
+title: "Custom Provider (BYOPAK) for Editor AI"
+sidebarTitle: "Custom Provider"
+description: "Point Editor AI at any OpenAI-compatible endpoint using the Custom Provider option — configure the URL, model, and auth header template."
+---
+
+The Custom Provider — internally called **BYOPAK** (Bring Your Own Provider API Key) — lets you connect Editor AI to any backend that accepts OpenAI-compatible chat completion requests. This includes self-hosted inference servers like vLLM and LocalAI, private corporate proxies, and any cloud service that mirrors the OpenAI API surface.
+
+## Configuration Fields
+
+<ParamField body="custom-provider-name" type="string" default="Custom Provider">
+  Display name shown in the AI popup info panel. This is cosmetic only and has no effect on the API request. Choose something descriptive so you can identify your endpoint at a glance.
+</ParamField>
+
+<ParamField body="custom-provider-url" type="string" required>
+  Base URL or full `/chat/completions` URL of your endpoint. Editor AI sends OpenAI-compatible request bodies. For example, a vLLM server would be `http://my-server:8000/v1/chat/completions`, while some proxies accept a bare base URL like `http://my-server:8000/v1`.
+</ParamField>
+
+<ParamField body="custom-provider-api-key" type="string" default="">
+  API key or token sent to your endpoint. Leave this blank if your server requires no authentication — for example, an unauthenticated server running on localhost.
+</ParamField>
+
+<ParamField body="custom-provider-model" type="string" default="">
+  The model name your endpoint expects to receive in the `model` field of the request body. This must match exactly what your server recognises — consult your server's documentation.
+</ParamField>
+
+<ParamField body="custom-provider-auth" type="string" default="Authorization: Bearer ${KEY}">
+  Auth header template injected into every request. The literal string `${KEY}` is replaced with the value of **API Key** at request time. The default template produces a standard `Authorization: Bearer <key>` header. Clear this field entirely to send no authentication header.
+</ParamField>
+
+## Setup
+
+<Steps>
+  <Step title="Select the Custom provider">
+    Open the Editor AI panel → **Settings**. Set **AI Provider** to `custom`.
+  </Step>
+  <Step title="Open the Custom provider section">
+    Scroll down in Settings to the **Provider — Custom (BYOPAK)** block.
+  </Step>
+  <Step title="Fill in the fields">
+    Enter your **Display Name**, **Endpoint URL**, **API Key**, **Model**, and **Auth Header Template**. Only the Endpoint URL and Model are strictly required; the others can be left at their defaults or left blank.
+  </Step>
+  <Step title="Test the connection">
+    Press **Test Connection** to send a minimal probe request to your endpoint. A success message confirms that Editor AI can reach your server and that the auth header is accepted.
+  </Step>
+</Steps>
+
+## Example: Self-Hosted vLLM
+
+The following example configures Editor AI to talk to a vLLM server running `meta-llama/Llama-3.1-8B-Instruct` on a private host:
+
+```
+Endpoint URL:  http://my-server:8000/v1/chat/completions
+Model:         meta-llama/Llama-3.1-8B-Instruct
+Auth Header:   Authorization: Bearer my-vllm-key
+```
+
+Set **API Key** to `my-vllm-key` and **Auth Header Template** to `Authorization: Bearer ${KEY}` (the default). At request time, `${KEY}` is substituted with your key, producing the correct header.
+
+<Info>
+  The auth header template supports any header name and value format. If your service authenticates via `X-API-Key` rather than `Authorization`, set the template to `X-API-Key: ${KEY}`. The colon and space after the header name are required — the value is everything after the first space.
+</Info>
+
+<Note>
+  Leaving the **Auth Header Template** field blank sends no `Authorization` header at all. This is the correct setting for unauthenticated local servers, network-internal proxies that handle auth at the infrastructure layer, or any endpoint that rejects unexpected auth headers.
+</Note>

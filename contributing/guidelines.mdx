@@ -1,0 +1,106 @@
+---
+title: "Contributing to Editor AI: Bugs, Features, and PRs"
+sidebarTitle: "Guidelines"
+description: "How to report bugs, suggest features, and submit pull requests to Editor AI — including branch conventions, code style, and the Geode SDK best practices to follow."
+---
+
+Contributions to Editor AI are welcome. This page covers how to report bugs, suggest features, and submit pull requests — including the branch conventions, code style expectations, and Geode SDK practices the project follows.
+
+## Reporting Bugs
+
+<Steps>
+  <Step title="Search existing issues">
+    Check [github.com/entity12208/editorai/issues](https://github.com/entity12208/editorai/issues) before opening anything new. Your bug may already be tracked, or a workaround may have been posted.
+  </Step>
+  <Step title="Open a new issue">
+    If no existing issue covers your problem, open a new one and include:
+
+    - A clear description of the problem and step-by-step reproduction instructions
+    - What you expected to happen versus what actually happened
+    - Your platform (Windows, Mac, Android, or iOS) and your Geode version
+    - Any relevant console errors, or the contents of `last-ai-response.txt` from the mod's save folder if the problem involves a bad generation (enable **Save AI Output** in settings to produce this file)
+  </Step>
+</Steps>
+
+## Suggesting Features
+
+Before writing up a feature request, check the existing issues to see whether it has already been discussed. When you open a request, explain your use case and the concrete benefit the feature would bring — vague requests are harder to act on.
+
+Be open to discussion. Not every good idea fits the project's constraints, and some requests are structurally out of scope:
+
+<Info>
+  Editor AI is explicitly **not** on the Geode index because the Geode guidelines do not allow AI-placed objects. Feature suggestions that would require the mod to comply with index rules — or that would otherwise put it back on the index — are not actionable.
+</Info>
+
+## Pull Request Workflow
+
+<Steps>
+  <Step title="Fork the repository">
+    Click **Fork** on the [Editor AI GitHub page](https://github.com/Entity12208/EditorAI) to create a copy under your account.
+  </Step>
+  <Step title="Clone your fork">
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/EditorAI.git
+    cd EditorAI
+    ```
+  </Step>
+  <Step title="Create a feature branch">
+    Never commit directly to `main`. Create a descriptive branch for your work:
+
+    ```bash
+    git checkout -b feature/your-feature
+    ```
+  </Step>
+  <Step title="Make your changes">
+    Follow the code style guidelines in the next section. Add comments for any logic that isn't immediately obvious, and test your changes on at least one platform before pushing.
+  </Step>
+  <Step title="Commit with a semantic message">
+    Use the `type: description` convention so the project history stays readable:
+
+    ```bash
+    git commit -m "feat: add your feature description"
+    ```
+
+    Common prefixes: `feat` (new feature), `fix` (bug fix), `docs` (documentation), `refactor` (code restructure), `chore` (tooling or config).
+  </Step>
+  <Step title="Push and open a pull request">
+    Push your branch and open a pull request against the `main` branch of the upstream repository. Describe what your PR does and link any related issues.
+
+    ```bash
+    git push origin feature/your-feature
+    ```
+  </Step>
+</Steps>
+
+## Code Style Guidelines
+
+- Follow the existing code style found in `src/main.cpp` and `src/overlay.cpp` — indentation, naming conventions, and file structure are already established there.
+- Use Geode SDK APIs and macros wherever they apply. The SDK documentation at [docs.geode-sdk.org](https://docs.geode-sdk.org) covers hooks, UI helpers, settings access, and more.
+- Add comments for complex or non-obvious logic, especially around AI prompt construction, object placement math, or platform-specific workarounds.
+- Test on at least one platform before opening a PR. If you can test on multiple platforms, mention which ones you verified in the PR description.
+- Keep PRs focused — one feature or one fix per PR. Mixed-purpose PRs are harder to review and harder to revert if something goes wrong.
+
+<Warning>
+  Do not combine unrelated changes in a single PR. If you find an unrelated bug while working on a feature, open a separate issue or PR for it.
+</Warning>
+
+## Community
+
+<CardGroup cols={2}>
+  <Card title="Discord" icon="discord" href="https://discord.gg/5hwCqMUYNj">
+    The main community hub for Editor AI. Good place to discuss ideas before opening a formal issue or PR.
+  </Card>
+  <Card title="GitHub Issues" icon="circle-dot" href="https://github.com/entity12208/editorai/issues">
+    Bug reports, feature requests, and tracked work items all live here.
+  </Card>
+  <Card title="HuggingFace Org" icon="brain" href="https://huggingface.co/EditorAI-Geode/">
+    The EditorAI-Geode organisation hosts models trained on EditorAI datasets. Join to publish your own fine-tuned models.
+  </Card>
+  <Card title="Source Code" icon="github" href="https://github.com/Entity12208/EditorAI">
+    The full source repository on GitHub.
+  </Card>
+</CardGroup>
+
+<Note>
+  Editor AI is MIT licensed. By contributing, you agree that your contributions will be licensed under the same MIT terms.
+</Note>

@@ -1,0 +1,69 @@
+---
+title: "Editor AI Sessions: Persistent Generation Conversations"
+sidebarTitle: "Sessions"
+description: "Sessions in Editor AI are persistent AI conversations tied to a level. Follow up, refine, plan, or ask questions — conversations survive game restarts."
+---
+
+Every generation in Editor AI lives inside a session. A session is a persistent conversation: you can follow up, refine, plan, and ask questions across as many exchanges as you like. Sessions survive game restarts with full context preserved — close the game, come back later, and pick up exactly where you left off.
+
+## Session states
+
+A session moves through a defined set of states as it progresses. You can see the current state in the Sessions tab next to each session's title.
+
+| State | Meaning |
+|---|---|
+| `running` | The AI is actively working on a generation or follow-up. |
+| `ready - open an editor` | Generation is complete. The AI is waiting for you to open the target level's editor so the result can be staged. |
+| `staged for review` | The result has been placed on the editor's AI layer. Choose **Accept**, **Edit**, or **Deny** to proceed. |
+| `done` | The generation has been accepted or finalized. |
+| `failed` | The generation encountered an error — check the transcript for details. |
+
+## Following up
+
+Once a generation is done, you can keep the conversation going directly from the **Sessions** tab. Type a message and choose a `mode` to control what the AI does with it:
+
+- **Default (edit)** — The AI modifies the level based on your message. Use this for refinements like "make the ship section longer" or "swap the background to a forest theme."
+- **Plan** — The AI writes out a design plan without placing any objects. Useful for workshopping ideas before committing to changes.
+- **Chat** — The AI answers your question without producing any script output. Good for asking "what style would complement this section?" or "how many objects do I have?"
+
+Some example follow-ups to try:
+
+```text
+Make the ship section at the start longer and add more obstacles.
+Add neon glow decorations to the platforms.
+What mood do you think this level has right now?
+Restyle the whole thing with a cyberpunk theme.
+```
+
+## Session memory
+
+Editor AI manages conversation memory carefully so long sessions stay coherent without blowing up your API context budget.
+
+- **`transcript`** is the visible log shown in the Sessions tab. It includes all entry types — user messages, assistant replies, tool calls, status updates, and errors. The transcript rolls at 400 entries; the oldest entries fall off first so the log keeps flowing rather than freezing.
+- **`chat`** is the durable AI context — only user and assistant turns, no tool noise. This is what the AI's context is rebuilt from after a restart. It is capped at roughly 36,000 characters of total text before folding begins.
+- **`chatSummary`** is a running digest of the oldest folded turns. When the live `chat` array grows too large, the earliest exchanges are condensed into brief "Request / Outcome" digest lines and appended here. The summary itself is also bounded — its head (the original-request era) and its newest tail are kept, with a note marking anything condensed in between. This means an arbitrarily long conversation always rebuilds into a prompt of roughly *summary + last N turns*, never the full history.
+- **`workingState`** is a compact one-line summary of the level's current condition, refreshed after every generation and follow-up. It is persisted with the session and re-injected into the AI context when the session resumes — so the AI always has an accurate answer to "what did you change last time?" even across restarts.
+
+## Resuming after a restart
+
+Sessions are fully serialized to Geode save data. After closing and reopening the game:
+
+1. Open the Editor AI panel.
+2. Go to the **Sessions** tab — your conversation history is there.
+3. Send a new message. The AI rebuilds its context from the saved `chat`, `chatSummary`, and `workingState`, then continues as if nothing happened.
+
+The engine is reconstructed lazily the first time you send a message to a restored session, so there is no startup cost until you actually need it.
+
+## Rating a session
+
+After a generation completes, a thumbs-up / thumbs-down rating prompt (1–10 scale) appears in the session. Your rating is stored alongside the prompt, settings, and generated objects for that session. Ratings are used as few-shot examples to guide future generations — the AI uses up to **Feedback Examples** (default 3, max 10) of your past rated sessions as context when starting new ones, so it gradually learns your taste.
+
+To opt out of the rating prompt entirely, disable **Rate Generations** in Settings → Interface.
+
+## Exporting a session
+
+Press the **export** button on any session to write its full transcript to a text file in the mod's save folder. The filename is shown in a confirmation message after the export completes.
+
+<Note>
+  A session is tied to a specific level. If you navigate to a different level's editor while a session is in the `ready - open an editor` state, nothing happens — the session keeps waiting patiently for its own level. Use the **Go to level** button in the bottom-right of the session card to jump straight to the right editor.
+</Note>

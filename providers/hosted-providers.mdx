@@ -1,0 +1,56 @@
+---
+title: "Hosted AI Providers: Cloud APIs for Editor AI"
+sidebarTitle: "Hosted Providers"
+description: "Configure Gemini, Claude, OpenAI, OpenRouter, Mistral, HuggingFace, DeepSeek, or Groq as your Editor AI backend — paste an API key or use browser sign-in."
+---
+
+Hosted providers send your prompts to a remote API operated by a third party. You will need an API key for most of them — OpenRouter and HuggingFace additionally support a one-click browser sign-in flow so you never have to copy a key manually. All keys are stored only on your device inside Geode's local save data and are never transmitted anywhere other than the provider's own API endpoint.
+
+## Supported Hosted Providers
+
+| Provider | Default Model | Get a Key | Browser Sign-In |
+|---|---|---|---|
+| **Gemini** | `gemini-3-flash` | [aistudio.google.com/api-keys](https://aistudio.google.com/api-keys) | No |
+| **Claude** | `claude-sonnet-4-6` | [console.anthropic.com](https://console.anthropic.com) | No |
+| **OpenAI** | `gpt-4o` | [platform.openai.com/api-keys](https://platform.openai.com/api-keys) | No |
+| **OpenRouter** | `google/gemini-2.5-flash` | [openrouter.ai/keys](https://openrouter.ai/keys) | Yes |
+| **Mistral** | `ministral-8b-latest` | [console.mistral.ai/api-keys/](https://console.mistral.ai/api-keys/) | No |
+| **HuggingFace** | `meta-llama/Llama-3.1-8B-Instruct` | [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens) | Yes |
+| **DeepSeek** | `deepseek-chat` | [platform.deepseek.com](https://platform.deepseek.com) | No |
+| **Groq** | `llama-3.3-70b-versatile` | [console.groq.com/keys](https://console.groq.com/keys) | No |
+
+## Setting Up a Hosted Provider
+
+<Steps>
+  <Step title="Open Settings">
+    Open the Editor AI panel and press **Settings**.
+  </Step>
+  <Step title="Select your provider">
+    Find the **AI Provider** dropdown and select the hosted provider you want to use.
+  </Step>
+  <Step title="Scroll to the provider section">
+    Scroll down in Settings to the matching provider block (e.g. **Provider — Gemini**, **Provider — Claude**, etc.).
+  </Step>
+  <Step title="Enter your API key or sign in">
+    Paste your API key into the key field. For **OpenRouter** and **HuggingFace**, you can alternatively press **Sign in with browser** to authenticate without copying a key.
+  </Step>
+  <Step title="Optionally fetch the live model list">
+    Press **Fetch model list** to pull the current catalogue of available models directly from the provider. You can also type any valid model ID directly into the model field without fetching.
+  </Step>
+</Steps>
+
+## Changing Models
+
+Each provider has a dedicated model field that ships with a sensible default. To change the model, either press **Fetch model list** to browse the live catalogue and select an option, or type any valid model ID directly into the field. Model IDs entered manually are not validated until a generation is attempted — if the ID is wrong you will see an error from the provider.
+
+<Tip>
+  Groq offers a generous free tier with some of the fastest inference available for open models — ideal for quick experiments or high-volume generation sessions. Gemini has a free tier as well, but it enforces tight per-minute rate limits; switch to a paid key if you hit quota errors.
+</Tip>
+
+<Info>
+  OpenRouter gives access to dozens of hosted models — including Claude, Gemini, and Llama variants — under a single API key. Models are addressed using a `provider/model` slug format, such as `anthropic/claude-3.5-sonnet` or `google/gemini-2.5-flash`. Use **Fetch model list** to browse all currently available slugs without leaving Editor AI.
+</Info>
+
+<Warning>
+  API keys are stored in Geode's local save data on your device. Never share your save files with others, and avoid taking screenshots that include the key input fields. If a key is compromised, revoke it immediately from the provider's dashboard and generate a new one.
+</Warning>

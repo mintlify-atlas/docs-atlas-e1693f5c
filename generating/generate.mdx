@@ -1,0 +1,84 @@
+---
+title: "Generate a Geometry Dash Level with AI"
+sidebarTitle: "Generate"
+description: "Step-by-step guide to starting an AI generation in Editor AI — choose a target level, write a prompt, set difficulty and style, and watch it build."
+---
+
+Generation is the core workflow in Editor AI. Open the panel, describe the level you want, and the AI builds it directly inside the Geometry Dash editor — placing objects on its own preview layer that you can accept, refine, or discard at any time.
+
+## Starting a generation
+
+<Steps>
+  <Step title="Open the Editor AI panel">
+    Press **E** anywhere in the game (desktop) or tap the floating **AI** bubble (mobile) to open the panel.
+  </Step>
+  <Step title="Go to the Generate tab">
+    Inside the panel, select the **Generate** tab.
+  </Step>
+  <Step title="Choose a Target">
+    Pick where the AI should build:
+    - **Current editor** — works on the level you already have open
+    - **New level** — creates a brand-new level and opens it automatically
+    - **One of your created levels** — pick any level from your local list
+  </Step>
+  <Step title="Write a prompt">
+    Describe the level you want in the prompt field. See [Prompt tips](#prompt-tips) below for guidance.
+  </Step>
+  <Step title="Set Difficulty, Style, and Length">
+    Adjust the three generation parameters (each accepts presets or free-form text — see details below).
+  </Step>
+  <Step title="Press Generate">
+    Hit **Generate**. The session starts immediately and the AI begins working. You can watch progress in the **Sessions** tab, or close the panel and come back later.
+  </Step>
+</Steps>
+
+## Prompt tips
+
+The AI reads your existing level content before it starts building, so your prompt can reference what's already there.
+
+- **Be descriptive about both gameplay and visuals.** "A hard cube level with tight spike timing and a dark industrial theme" gives the AI much more to work with than "a hard level."
+- **Include mood, references, and special requests.** Try "Inspired by Cataclysm, with sawblades and flashing colors" or "Lo-fi aesthetic with pastel blocks and relaxed timing."
+- **For follow-ups, say so explicitly.** Phrases like "extend this level" or "restyle this with a space theme" tell the AI to build on what exists rather than start fresh.
+
+<Tip>
+  Short prompts work too. Even "a spooky Halloween level" produces valid results. More detail gives better alignment with what you had in mind.
+</Tip>
+
+## Generation parameters
+
+### Difficulty
+
+Controls the target difficulty the AI aims for. Preset values are `easy`, `medium`, `hard`, and `extreme`, but any free-form text is accepted — try `demon`, `tutorial`, or `grandma-friendly`.
+
+### Style
+
+Sets the visual and gameplay style. Presets are `modern`, `retro`, `flow`, and `memory`. Free-form text is accepted here too — describe any aesthetic you have in mind.
+
+### Length
+
+Sets the approximate level length. Presets are `short`, `medium`, `long`, `xl`, and `xxl`. Free-form text is accepted if you want something more specific.
+
+## Target Object Count
+
+**Default: 0 (off).** When set to a positive number, the AI is instructed to keep generating rounds until the total object count reaches at least that value. The maximum is 20,000 objects. Leave it at 0 to let the AI decide when the level is complete.
+
+## Quality Preset
+
+Controls the tradeoff between speed and output quality.
+
+| Preset | Behavior |
+|---|---|
+| `fast` | One quick draft pass — good for a rough sketch or testing prompts. |
+| `balanced` | A moderate number of refinement passes — solid results without the full wait. |
+| `premium` | *(Default)* Keeps refining until the AI itself reports the level is done. No fixed pass cap; cancel at any time. |
+
+---
+
+<CardGroup cols={2}>
+  <Card title="Sessions" icon="comments" href="/generating/sessions">
+    Follow up, refine, and pick up where you left off — sessions persist across game restarts.
+  </Card>
+  <Card title="Live Placement" icon="eye" href="/generating/live-placement">
+    Watch blocks appear in the editor in real time as the AI builds your level.
+  </Card>
+</CardGroup>

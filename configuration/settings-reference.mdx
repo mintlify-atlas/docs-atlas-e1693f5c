@@ -1,0 +1,355 @@
+---
+title: "Editor AI Settings Reference"
+sidebarTitle: "Settings Reference"
+description: "Complete reference for every Editor AI setting — generation targets, placement behavior, AI behavior presets, provider configuration, interface options, and privacy controls."
+---
+
+All Editor AI settings live in the Geode Settings panel (from the Geode page → Editor AI → Settings). Every option has a hover tooltip in-game — this page provides the full reference with defaults and valid values.
+
+<Note>
+  Settings are stored in Geode's save data on your device. API keys never leave your device or get sent anywhere other than the chosen provider's API.
+</Note>
+
+## Generation
+
+These settings control what kind of level the AI generates, which provider it calls, and how large the output should be.
+
+<ParamField path="ai-provider" type="string" default="gemini">
+  Which backend to call. Configure the matching section below.
+
+  Valid values: `gemini`, `claude`, `openai`, `openrouter`, `ministral`, `huggingface`, `deepseek`, `groq`, `ollama`, `lm-studio`, `llama-cpp`, `custom`, `manual`
+</ParamField>
+
+<ParamField path="difficulty" type="string" default="medium">
+  Target difficulty for the AI. Canned values: easy / medium / hard / extreme. Free-form text is also accepted (e.g. 'demon', 'tutorial').
+</ParamField>
+
+<ParamField path="style" type="string" default="modern">
+  Visual / gameplay style. Canned values: modern / retro / flow / memory. Free-form text is also accepted.
+</ParamField>
+
+<ParamField path="length" type="string" default="medium">
+  Approximate level length. Canned values: short / medium / long / xl / xxl. Free-form text is also accepted.
+</ParamField>
+
+<ParamField path="target-object-count" type="int" default="0">
+  Minimum total objects a generation must reach. The AI is asked to continue until it gets there (or extension rounds run out). `0` = off.
+
+  Range: `0` – `20000`
+</ParamField>
+
+## Placement & Editor
+
+These settings control how blocks are streamed into the editor during generation and how the AI interprets level geometry.
+
+<ParamField path="live-placement" type="bool" default="true">
+  Place each round's blocks into the editor while the AI is still working, instead of everything at once at the end. Accept/Deny still reviews the whole build when it finishes.
+</ParamField>
+
+<ParamField path="spawn-batch-size" type="int" default="8">
+  Objects placed per editor tick during preview. Higher = faster but jankier.
+
+  Range: `1` – `100`
+</ParamField>
+
+<ParamField path="ai-ground-y" type="int" default="105">
+  Editor Y of the visible ground line. 105 is default. Lower if blocks float; higher if they bury.
+
+  Range: `15` – `300`
+</ParamField>
+
+<ParamField path="edit-target-ops" type="int" default="1500">
+  When the AI reworks an existing level, it must total at least this many edits (objects moved + deleted + added + restyled) before the result stages — it is asked to continue until it gets there. Small follow-up tweaks (under 30 edits) stage immediately. `0` = off.
+
+  Range: `0` – `5000`
+</ParamField>
+
+## AI Behavior
+
+These settings control how hard the AI works, how many passes it takes, and which optional capabilities are enabled.
+
+<ParamField path="quality-profile" type="string" default="premium">
+  One-click presets for speed versus quality. Premium is the default and keeps working until the AI says the level is done. Choose Balanced or Fast when you want less work.
+
+  Valid values: `fast`, `balanced`, `premium`
+</ParamField>
+
+<ParamField path="enable-ai-tools" type="bool" default="true">
+  Let the AI call helper tools (web search, level analysis, song lookup, etc.) before composing.
+</ParamField>
+
+<ParamField path="show-goal-tasks" type="bool" default="true">
+  When the AI sets itself a goal (`set_goal` tool), mirror its goal and task checklist in the status line and session log.
+</ParamField>
+
+<ParamField path="enable-advanced-features" type="bool" default="true">
+  Allow the AI to emit color/move/pulse triggers and group IDs.
+</ParamField>
+
+<ParamField path="refinement-rounds" type="int" default="5">
+  Number of self-review passes when **Refine Until Done** is off. This setting is ignored in unlimited mode; 0 disables fixed refinement.
+
+  Range: `0` – `10`
+</ParamField>
+
+<ParamField path="refine-until-done" type="bool" default="true">
+  Instead of a fixed number of polish passes, keep refining until the AI itself reports the level is finished. There is no pass cap; you can cancel at any time.
+</ParamField>
+
+<ParamField path="ai-playtest" type="bool" default="true">
+  Let the AI repeatedly run simulated playtests and inspect fresh level renders between passes. Drafts are staged early only when doing so cannot overwrite an existing level.
+</ParamField>
+
+<ParamField path="enable-self-critique" type="bool" default="true">
+  One extra round after refinements where the AI scores its own level and patches the weakest area (or confirms it's good). Costs at most one additional API call.
+</ParamField>
+
+<ParamField path="enable-vision" type="bool" default="true">
+  When the model supports images (Claude, Gemini, GPT-4o, LLaVA...), attach a rendered snapshot of the level to review and follow-up turns so the AI can SEE what it built.
+</ParamField>
+
+<ParamField path="two-pass-generation" type="bool" default="true">
+  Generate the gameplay skeleton first; after you accept it, a second pass adds decoration, color triggers, and atmosphere without touching gameplay.
+</ParamField>
+
+<ParamField path="copilot-mode" type="bool" default="false">
+  While you edit, EditorAI watches for death zones and physics problems and automatically proposes a fix blueprint (you still accept or deny). At most one auto-fix every 2 minutes.
+</ParamField>
+
+<ParamField path="subagent-provider" type="string" default="same">
+  The consultant used by `ask_subagent`. `same` copies the main provider and model. `platinum` uses the free community Ollama network independently of the main provider.
+</ParamField>
+
+<ParamField path="subagent-model" type="string" default="">
+  Model name for the subagent provider. Empty uses that provider's configured model.
+</ParamField>
+
+## Providers
+
+Each AI backend has its own subsection for the model name and API key (or local URL). Select the active provider with the **AI Provider** setting above.
+
+<Tip>
+  Use **Fetch model list** in the in-game Provider tab to pull the current model list for providers that support it (Gemini, Claude, OpenAI, Mistral, DeepSeek, Groq, Ollama).
+</Tip>
+
+### Gemini
+
+Google's Gemini family. Get an API key from [Google AI Studio](https://aistudio.google.com).
+
+<ParamField path="gemini-model" type="string" default="gemini-3-flash">
+  Use **Fetch model list** in the in-mod Provider tab to pull the live list, or type any Gemini model id.
+</ParamField>
+
+<ParamField path="gemini-api-key" type="string" default="">
+  From Google AI Studio. Stays on this device in Geode save data.
+</ParamField>
+
+### Claude
+
+Anthropic's Claude family. Get an API key from [console.anthropic.com](https://console.anthropic.com).
+
+<ParamField path="claude-model" type="string" default="claude-sonnet-4-6">
+  Use **Fetch model list** in the in-mod Provider tab to pull the live list, or type any Claude model id.
+</ParamField>
+
+<ParamField path="claude-api-key" type="string" default="">
+  From console.anthropic.com. Stays on this device.
+</ParamField>
+
+### OpenAI
+
+OpenAI's GPT family. Get an API key from [platform.openai.com](https://platform.openai.com).
+
+<ParamField path="openai-model" type="string" default="gpt-4o">
+  Use **Fetch model list** in the in-mod Provider tab to pull the live list, or type any OpenAI model id.
+</ParamField>
+
+<ParamField path="openai-api-key" type="string" default="">
+  From platform.openai.com. Stays on this device.
+</ParamField>
+
+### Mistral
+
+Mistral AI's hosted API. Get an API key from [console.mistral.ai](https://console.mistral.ai).
+
+<ParamField path="ministral-model" type="string" default="ministral-8b-latest">
+  Use **Fetch model list** in the in-mod Provider tab to pull the live list, or type any Mistral model id.
+</ParamField>
+
+<ParamField path="ministral-api-key" type="string" default="">
+  From console.mistral.ai. Stays on this device.
+</ParamField>
+
+### HuggingFace
+
+Hugging Face Inference API. Get a token from [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
+
+<ParamField path="huggingface-model" type="string" default="meta-llama/Llama-3.1-8B-Instruct">
+  Repo-style id, e.g. `meta-llama/Llama-3.1-8B-Instruct`.
+</ParamField>
+
+<ParamField path="huggingface-api-key" type="string" default="">
+  From huggingface.co/settings/tokens. Stays on this device.
+</ParamField>
+
+### OpenRouter
+
+OpenRouter proxies many hosted models behind a single key. Get an API key from [openrouter.ai/keys](https://openrouter.ai/keys).
+
+<ParamField path="openrouter-model" type="string" default="google/gemini-2.5-flash">
+  Provider/model slug, e.g. `google/gemini-2.5-flash` or `anthropic/claude-3.5-sonnet`.
+</ParamField>
+
+<ParamField path="openrouter-api-key" type="string" default="">
+  From openrouter.ai/keys. One key, many hosted models.
+</ParamField>
+
+### DeepSeek
+
+DeepSeek's hosted API. Get an API key from [platform.deepseek.com](https://platform.deepseek.com).
+
+<ParamField path="deepseek-model" type="string" default="deepseek-chat">
+  Use **Fetch model list** in the in-mod Provider tab to pull the live list, or type any DeepSeek model id.
+</ParamField>
+
+<ParamField path="deepseek-api-key" type="string" default="">
+  From platform.deepseek.com.
+</ParamField>
+
+### Groq
+
+Groq's high-speed inference API. Get a free API key from [console.groq.com/keys](https://console.groq.com/keys).
+
+<ParamField path="groq-model" type="string" default="llama-3.3-70b-versatile">
+  Pick a preset or type any Groq model id in the in-mod Provider tab. Use **Fetch model list** to pull the live list.
+</ParamField>
+
+<ParamField path="groq-api-key" type="string" default="">
+  From console.groq.com/keys. Free tier available.
+</ParamField>
+
+### Ollama
+
+Runs a model locally via [Ollama](https://ollama.com). No API key needed. Optionally route through the **EditorAI Platinum** community proxy instead of localhost.
+
+<ParamField path="use-platinum" type="bool" default="false">
+  Route Ollama requests through the EditorAI Platinum cloud proxy instead of localhost.
+</ParamField>
+
+<ParamField path="ollama-model" type="string" default="entity12208/editorai:deepseek">
+  Tag as shown by `ollama list`. e.g. `entity12208/editorai:v3-7b`.
+</ParamField>
+
+<ParamField path="ollama-timeout" type="int" default="600">
+  How long to wait for a local Ollama response before giving up.
+
+  Range: `60` – `1800` seconds
+</ParamField>
+
+### LM Studio
+
+Connects to a locally running [LM Studio](https://lmstudio.ai) server. Start the local server before generating.
+
+<ParamField path="lm-studio-url" type="string" default="http://localhost:1234">
+  Base URL of the LM Studio local server.
+</ParamField>
+
+<ParamField path="lm-studio-model" type="string" default="default">
+  Loaded model name in LM Studio. Start the server before generating.
+</ParamField>
+
+### llama.cpp
+
+Connects to a locally running [llama.cpp](https://github.com/ggerganov/llama.cpp) server.
+
+<ParamField path="llama-cpp-url" type="string" default="http://localhost:8080">
+  Base URL of the llama.cpp server.
+</ParamField>
+
+<ParamField path="llama-cpp-model" type="string" default="default">
+  Model name (often 'default' unless your server expects something specific).
+</ParamField>
+
+### Custom (BYOPAK)
+
+Bring your own provider — any OpenAI-compatible `/chat/completions` endpoint.
+
+<ParamField path="custom-provider-name" type="string" default="Custom Provider">
+  Cosmetic only. Shown in the AI popup info panel.
+</ParamField>
+
+<ParamField path="custom-provider-url" type="string" default="">
+  Base URL or full `/chat/completions` URL. OpenAI-compatible bodies are used.
+</ParamField>
+
+<ParamField path="custom-provider-api-key" type="string" default="">
+  Leave blank if your server needs no auth.
+</ParamField>
+
+<ParamField path="custom-provider-model" type="string" default="">
+  Model name expected by your endpoint.
+</ParamField>
+
+<ParamField path="custom-provider-auth" type="string" default="Authorization: Bearer ${KEY}">
+  `${KEY}` is replaced with your API key. Clear to send no header.
+</ParamField>
+
+## Interface
+
+Settings that affect the Editor AI UI panel and in-game experience.
+
+<ParamField path="check-updates" type="bool" default="true">
+  Once a day, check GitHub for a newer EditorAI release and offer a one-click install. Nothing installs without your confirmation.
+</ParamField>
+
+<ParamField path="hotkey-priority" type="bool" default="true">
+  The panel hotkey wins over the editor's own keybinds and other mods — the key is consumed by EditorAI. Text boxes still receive typing normally. Turn off to let the key also trigger whatever else is bound to it.
+</ParamField>
+
+<ParamField path="ui-anim-speed" type="int" default="8">
+  How fast the EditorAI panel opens and closes. `1` = slow fade (2 seconds), `10` = instant.
+
+  Range: `1` – `10`
+</ParamField>
+
+<ParamField path="show-ai-output" type="bool" default="false">
+  Write each generation's full raw AI response to `last-ai-response.txt` in this mod's save folder. Off by default.
+</ParamField>
+
+<ParamField path="enable-rating" type="bool" default="true">
+  Show the thumbs up/down rating prompt after generation.
+</ParamField>
+
+## Advanced & Limits
+
+Rate limiting, feedback tuning, and character filter controls. See the [Advanced page](/configuration/advanced) for a deeper walkthrough of each setting.
+
+<ParamField path="enable-rate-limiting" type="bool" default="true">
+  Throttle generations. Leave on for hosted APIs to avoid quota burns.
+</ParamField>
+
+<ParamField path="rate-limit-seconds" type="int" default="3">
+  Minimum seconds between generations when rate limiting is on.
+
+  Range: `1` – `60`
+</ParamField>
+
+<ParamField path="max-feedback-examples" type="int" default="3">
+  How many past rated generations to use as few-shot context.
+
+  Range: `1` – `10`
+</ParamField>
+
+<ParamField path="bypass-char-filter" type="bool" default="false">
+  Let every text box in the game accept any printable character (same behavior as Eclipse Menu's bypass). Off = vanilla filtering.
+</ParamField>
+
+<ParamField path="bypass-char-limit" type="bool" default="false">
+  Remove the maximum text length on every text box in the game (same behavior as Eclipse Menu's bypass). Off = vanilla limits.
+</ParamField>
+
+## Privacy
+
+<ParamField path="allow-telemetry" type="bool" default="false">
+  Opt-in. While ON, every generation is uploaded automatically to the community training collector: prompt, settings, generated objects, and ratings (yours and the AI's self-review). Never your identity, never API keys. Levels rated above 5 become training data for the free community models.
+</ParamField>

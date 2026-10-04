@@ -1,0 +1,71 @@
+---
+title: "Free AI Providers: Platinum and Ollama"
+sidebarTitle: "Free Providers"
+description: "Use Editor AI for free with Platinum (community cloud) or Ollama (fully local) — no account, no API key, and no usage limits imposed by Editor AI."
+---
+
+Editor AI offers two zero-cost providers. **Platinum** routes your prompts through volunteer-run community servers so you can generate levels immediately without any account or local setup. **Ollama** runs entirely on your own machine — nothing ever leaves your hardware. Both are accessed through the same `ollama` provider setting; a single toggle switches between them.
+
+---
+
+## Platinum
+
+Platinum is a community-operated Ollama proxy maintained at [github.com/entity12208/editorai-platinum](https://github.com/entity12208/editorai-platinum), with compute donated by **VLT GG**. It is the fastest way to try Editor AI: no install, no account, no cost.
+
+### How to Enable Platinum
+
+Set the **AI Provider** to `ollama` in Settings, then toggle **Use Platinum** ON. That's it — Editor AI will route your requests through the community servers instead of localhost.
+
+### Privacy
+
+Your prompts are processed on volunteer-run machines. Avoid including personal information, real names, passwords, or anything you wouldn't want a stranger to read. The Platinum proxy does not log generations by default, but the servers are not under your control.
+
+<Warning>
+  Platinum may be slower or temporarily unavailable during peak hours or server downtime. Because the servers are volunteer-run, there is no uptime guarantee. If you need reliable availability, run Ollama locally or switch to a hosted provider.
+</Warning>
+
+### Community & Donating Compute
+
+Join the Editor AI community Discord at [discord.gg/5hwCqMUYNj](https://discord.gg/5hwCqMUYNj) to get help, share generations, or ask about contributing a server to the Platinum network.
+
+---
+
+## Ollama
+
+Ollama lets you run a language model locally. Every prompt stays on your machine, inference costs nothing beyond electricity, and there are no rate limits imposed by any external service.
+
+### Requirements
+
+- **6+ GB VRAM** is recommended for comfortable inference at reasonable speeds.
+- Ollama also runs on CPU but inference will be significantly slower — expect waits of several minutes per generation on CPU-only hardware.
+- Any OS supported by Ollama (Windows, macOS, Linux) works with Editor AI.
+
+### Setup
+
+<Steps>
+  <Step title="Install Ollama">
+    Download and install Ollama from [ollama.com](https://ollama.com). Follow the installer for your platform — no additional configuration is needed.
+  </Step>
+  <Step title="Pull a model">
+    Open a terminal and pull the recommended Editor AI fine-tuned model. You can also pull any other Ollama-compatible model if you prefer.
+
+    ```bash
+    # Install the recommended Editor AI fine-tuned model
+    ollama pull entity12208/editorai:deepseek
+
+    # Or list available models
+    ollama list
+    ```
+  </Step>
+  <Step title="Configure Editor AI">
+    Open the Editor AI panel → **Settings**. Set **AI Provider** to `ollama`. Set **Ollama Model Tag** to the exact name shown by `ollama list` (e.g. `entity12208/editorai:deepseek`). Make sure **Use Platinum** is **OFF** so requests go to your local Ollama instance.
+  </Step>
+</Steps>
+
+### Timeout Setting
+
+The **Ollama Timeout** setting controls how many seconds Editor AI waits for a local Ollama response before giving up. The default is **600 seconds** with a range of **60–1800 seconds**. If you are running on slow hardware or a large model, increase this value to avoid premature timeouts.
+
+<Tip>
+  Run `ollama list` in a terminal to see the exact name of every installed model. The **Ollama Model Tag** field in Editor AI must match this name character-for-character, including the tag after the colon (e.g. `:deepseek`). A mismatch will cause Ollama to return a model-not-found error.
+</Tip>
